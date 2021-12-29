@@ -7,3 +7,9 @@ tasks:
     cmds:
       - flux reconcile source git flux-system
     silent: true
+
+  update:
+    desc: Update Flux to latest version
+    cmds:
+      - brew upgrade fluxcd/tap/flux
+    silent: true
