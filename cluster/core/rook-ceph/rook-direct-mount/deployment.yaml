@@ -23,6 +23,7 @@ spec:
           command: ["/bin/bash"]
           args: ["-m", "-c", "/usr/local/bin/toolbox.sh"]
           imagePullPolicy: IfNotPresent
+          tty: true
           env:
             - name: ROOK_CEPH_USERNAME
               valueFrom:
