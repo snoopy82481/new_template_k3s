@@ -20,7 +20,7 @@ spec:
       containers:
         - name: rook-direct-mount
           image: rook/ceph:v1.8.1
-          command: ["/tiny"]
+          command: ["/tini"]
           args: ["-g", "--", "/usr/local/bin/toolbox.sh"]
           imagePullPolicy: IfNotPresent
           tty: true
