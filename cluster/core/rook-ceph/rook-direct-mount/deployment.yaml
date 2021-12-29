@@ -61,7 +61,7 @@ spec:
             path: /lib/modules
         - name: nas-data
           nfs:
-            server: "192.168.20.14"
+            server: "truenas.${SECRET_DOMAIN}"
             path: /mnt/storage0/Data
         - name: mon-endpoint-volume
           configMap:
