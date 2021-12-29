@@ -21,7 +21,7 @@ spec:
         - name: rook-direct-mount
           image: rook/ceph:v1.8.1
           command: ["/bin/bash"]
-          args: ["-m", "-c", "/usr/local/bin/toolbox.sh"]
+          args: ["-m", "-c", "chmod +x /usr/local/bin/toolbox.sh", "/usr/local/bin/toolbox.sh"]
           imagePullPolicy: IfNotPresent
           tty: true
           env:
