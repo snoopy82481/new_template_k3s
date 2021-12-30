@@ -51,7 +51,7 @@ spec:
         volumeSpec:
           nfs:
             server: "truenas.${SECRET_DOMAIN}"
-            path: /mnt/storage0/data
+            path: /mnt/storage0/Data
         mountPath: /media
     resources:
       requests:
