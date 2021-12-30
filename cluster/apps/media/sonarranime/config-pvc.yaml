@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sonarrAnime-config-v1
+  name: sonarranime-config-v1
   namespace: media
 spec:
   accessModes:
