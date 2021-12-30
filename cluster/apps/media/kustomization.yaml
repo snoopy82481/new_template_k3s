@@ -4,5 +4,7 @@ kind: Kustomization
 resources:
   - overseerr
   - radarr
+  - radarr4k
   - sonarr
+  - sonarrAnime
   - sabnzbd
