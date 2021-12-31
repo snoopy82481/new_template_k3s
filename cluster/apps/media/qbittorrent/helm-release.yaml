@@ -23,6 +23,20 @@ spec:
       TZ: "America/Boise"
       LOG_LEVEL: "info"
       WAIT_FOR_VPN: "true"
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+      bittorrent:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          bittorrent:
+            enabled: true
+            port: 50413
+            protocol: TCP
+            targetPort: 50413
     ingress:
       main:
         enabled: true
