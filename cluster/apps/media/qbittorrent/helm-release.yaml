@@ -65,6 +65,14 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /shared
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "truenas.${SECRET_DOMAIN}"
+            path: /mnt/storage0/Data
+        mountPath: /media
     resources:
       requests:
         memory: 250Mi
