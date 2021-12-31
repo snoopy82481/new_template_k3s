@@ -93,4 +93,3 @@ spec:
             down: |-
               #!/bin/bash
               echo "disconnected" > /shared/vpnstatus
-
