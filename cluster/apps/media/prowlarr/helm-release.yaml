@@ -18,10 +18,13 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/prowlarr
-      tag: v0.1.10.1339
+      repository: cr.hotio.dev/hotio/prowlarr
+      tag: nightly
     env:
       TZ: "America/Boise"
+      PUID: 1001
+      GUID: 1001
+      UMASK: 002
     ingress:
       main:
         enabled: true
@@ -45,7 +48,7 @@ spec:
       config:
         enabled: true
         existingClaim: prowlarr-config-v1
-        mountPath: /app/config
+        mountPath: /config
     resources:
       requests:
         memory: 250Mi
