@@ -73,12 +73,6 @@ spec:
             server: "truenas.${SECRET_DOMAIN}"
             path: /mnt/storage0/Data
         mountPath: /media
-    resources:
-      requests:
-        memory: 250Mi
-        cpu: 500m
-      limits:
-        memory: 750Mi
     addons:
       vpn:
         enable: true
@@ -115,3 +109,9 @@ spec:
             down: |-
               #!/bin/bash
               echo "disconnected" > /shared/vpnstatus
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 750Mi
