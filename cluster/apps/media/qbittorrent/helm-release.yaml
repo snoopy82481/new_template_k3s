@@ -65,35 +65,16 @@ spec:
       vpn:
         enable: true
         type: wireguard
-        wireguard:
-          image:
-            repository: ghcr.io/k8s-at-home/wireguard
-            tag: v1.0.20210424
-            pullPolicy: IfNotPresent
-          securityContext:
-            capabilities:
-              add:
-                - NET_ADMIN
-                - SYS_MODULE
-          env:
-            TZ: "America/Boise"
-          configFileSecret: wireguard
-          networkPolicy:
-            enabled: true
-
-            egress:
-              - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-                ports:
-                # VPN traffic port - change if your provider uses a different port
-                - port: 443
-                  protocol: UDP
-              - to:
-                  # Allow traffic within K8S - change if your K8S cluster uses a different CIDR
-                - ipBlock:
-                    cidr: 10.0.0.0/8
-
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+          capabilities:
+            add:
+              - NET_ADMIN
+              - SYS_MODULE
+        env:
+          KILLSWITCH: "true"
+        configFileSecret: wireguard
     podSecurityContext:
       supplementalGroups:
         - 100
