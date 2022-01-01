@@ -7,3 +7,4 @@ resources:
   - networking.yaml
   - media.yaml
   - rook-ceph.yaml
+  - vpn.yaml
