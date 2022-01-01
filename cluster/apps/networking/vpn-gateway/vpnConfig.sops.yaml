@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: vpnConfig
+    namespace: vpn
+stringData:
+    vpnConfigFile: ENC[AES256_GCM,data:bPg89mSY4+FqAWXdGPs9SLRlNfV0DKhJFVu2ewaj+SN9xE/WUBB+i0LA0yYoUtbnH7rSw+AanlblvE8rETfqUOEniNU4kKL1GjFS3YLw7jlan4r5FbHJLVWds5YxK6Bj9vQSEallmYjIpPWfkwB+4+szuQw7zBDl3yWDDL0b/bO3NaLeT9RPhjKbt4+mmg377gqa9dxiqZjBlPupHkPfkn2QNpj0T91qeiE6Lsm4/TiqDlYjJGLlYPDuMeoq4Vdg2A2SUI/3HnjQJi/OPVBkOUPgaR3UwBGt2t0TjI04Klq3A+pcSO998cL5r/LmgWd1+BGdUKwaj7lA61BAtND5BhiwhjF491kRf2Um34NrtXpIJMHXo6F0AWG+G+TKdhapqP2wejEx41CZCYJlavK/Fw5x/d0gODomK0Fy1wLtCk1ZNIuE90XBeVJ80qCqvrnByjchwHO8rmE5Ex1owbhsll5FyL5e+LLpCcUZlpf4RwxEV6fCqyVw2R8Q5EaXgfvpUYXCL8g4y1JCrCXT1ZDoTQCgytHu0yqnhEKwnVDADbsAnRh4kfxdt9DL2ffq8Ndyk6zoxYSQfGo644Y/i4d65WLZ26fDZKbv8iLyif7r6THkDWECc/m0iw5MGCiYgQQ0H2dVHbfjIIx6qou1dVLEwZ/S/zp6N3IEJrFeM4gjQyTSHZaxLS4i+e82yPQWhBrnkSYFQRjlUdBnWyXfxi/Qa+Yh79vnZlXMUdhJ1bTf7IkLG0gDkkSXN77mDAgm0W+CSAkRLz5HvESVkw9hQOi7HyJQhK426XN26KWKkQpjR3xuc3+WE+uLqDuH1roNw8ynsuX/cz31YLjocakQt1ODCeM5kKY5eiIIJLaa1vBG,iv:5zg3sewNvcMcKGI1NI8m6Vhxc3SwJmptFjYpcmu0BWg=,tag:BIhl2roEdBN++6m29WnQ7Q==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1eynu35v0tpg9remal6zeecfeg9e84a2qxake027wwgdn02rdfcls7nyv8r
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBJWUZHYlB2Q1c3THBkdlhG
+            SmNtWTFoMDArdXNwaHpWUVNGeGt2NWNPTXdzCjRTOWQ1Z1p5SEZPc2hTQ25uNWxT
+            N2NpRkxxMkRLT0FqNyt1S1hVZnczR00KLS0tIDdqejZEVXZkL3hudXd2WlNrNE85
+            UzBFZVRwN0J0dlNMb3oyQ08wclVLQ0kK15nnKWE8159zQbuSMvzmxisCbXSn1x51
+            i2XqNqNR//gKd+sUNiT8jXgkPnZdCJ9Pkvx1M6t1LjqfRp/NwJrm3Q==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-01-01T21:06:02Z"
+    mac: ENC[AES256_GCM,data:dBRV0gZ93JQgb2pGk9M9yJq2VCanBh2UlyjKyW54t32QoThWaNrRe/g5fkhLyIPp6UK8L2asdGIc5d+JYFRzw2PaRlBsR5Arp3MDxgj8VqWorC/K9JGvFl3IMDsHC2F8tALysuadOVV5zFcnmh7TgsqnsfPYsPiQLoGTk9wMffY=,iv:s4DmQEYbwqGcUufmMZE4eQfD3eASbgLJVW9mg+XwPy8=,tag:wgctaFOoC8r/bR5mzyu2eg==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1
