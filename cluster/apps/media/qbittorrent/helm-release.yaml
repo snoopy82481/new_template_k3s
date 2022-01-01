@@ -70,10 +70,10 @@ spec:
           - NET_ADMIN
           - SYS_MODULE
       sysctls:
-      - name: net.ipv4.conf.all.src_valid_mark
-        value: "1"
-      - name: net.ipv6.conf.all.disable_ipv6
-        value: "0"
+        - name: net.ipv4.conf.all.src_valid_mark
+          value: "1"
+        - name: net.ipv6.conf.all.disable_ipv6
+          value: "0"
     persistence:
       config:
         enabled: true
