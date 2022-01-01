@@ -75,7 +75,7 @@ spec:
             TZ: "America/Boise"
           configSecret:
             enabled: true
-            config: |
+            config: |-
               IyB5b3VyIHByaXZhdGVpbnRlcm5ldGFjY2Vzcy5jb20gdXNlcm5hbWUgKG5vdCBuZWVkZWQgaWYg
               eW91IGFscmVhZHkgaGF2ZSBhbiBhdXRoIHRva2VuKQpQSUFfVVNFUk5BTUU9InAxNDgzNDE3IgoK
               IyBbT1BUSU9OQUxdIHlvdXIgcHJpdmF0ZWludGVybmV0YWNjZXNzLmNvbSBwYXNzd29yZCAob25s
