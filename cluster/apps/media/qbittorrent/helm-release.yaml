@@ -123,6 +123,11 @@ spec:
             down: |-
               #!/bin/bash
               echo "disconnected" > /shared/vpnstatus
+
+            persistence:
+              config:
+                enabled: true
+                mountPath: /etc/wireguard
     resources:
       requests:
         memory: 250Mi
