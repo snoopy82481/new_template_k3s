@@ -97,6 +97,7 @@ spec:
               ZyB0YWJsZSBmb3IgdGhpcyBwdXJwb3NlLCBzcGVjaWZ5IGl0IGhlcmUKIyBwaWEtd2cgd2lsbCBh
               ZGQgYSBkZWZhdWx0IHJvdXRlIHZpYSB0aGUgUElBIFZQTiBsaW5rIHRvIHRoYXQgdGFibGUgZm9y
               IHlvdQojIFZQTk9OTFlfUk9VVEVfVEFCTEU9InZwbm9ubHkiCg==
+
           scripts:
             up: |-
               #!/bin/bash
