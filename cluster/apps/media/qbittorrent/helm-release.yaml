@@ -98,6 +98,11 @@ spec:
               ZGQgYSBkZWZhdWx0IHJvdXRlIHZpYSB0aGUgUElBIFZQTiBsaW5rIHRvIHRoYXQgdGFibGUgZm9y
               IHlvdQojIFZQTk9OTFlfUk9VVEVfVEFCTEU9InZwbm9ubHkiCg==
 
+    settings:
+      VPN_INTERFACE: wg0
+      VPN_BLOCK_OTHER_TRAFFIC: true
+      VPN_TRAFFIC_PORT: 443
+      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
     podSecurityContext:
       supplementalGroups:
         - 100
