@@ -98,14 +98,6 @@ spec:
               ZGQgYSBkZWZhdWx0IHJvdXRlIHZpYSB0aGUgUElBIFZQTiBsaW5rIHRvIHRoYXQgdGFibGUgZm9y
               IHlvdQojIFZQTk9OTFlfUk9VVEVfVEFCTEU9InZwbm9ubHkiCg==
 
-          scripts:
-            up: |-
-              #!/bin/bash
-              echo "connected" > /shared/vpnstatus
-
-            down: |-
-              #!/bin/bash
-              echo "disconnected" > /shared/vpnstatus
     podSecurityContext:
       supplementalGroups:
         - 100
