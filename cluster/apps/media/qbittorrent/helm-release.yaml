@@ -18,17 +18,12 @@ spec:
       interval: 5m
   values:
     image:
-      repository: cr.hotio.dev/hotio/qbittorrent
-      tag: 4.3.9
+      repository: ghcr.io/k8s-at-home/qbittorrent
+      tag: v4.3.9
     env:
       TZ: "America/Boise"
-      PUID: 1001
-      GUID: 1001
-      UMASK: 002
-      VPN_ENABLED: true
-      VPN_CONF: "wg0"
-      VPN_IP_CHECK_DELAY: 5
-      PRIVOXY_ENABLED: false
+    settings:
+      automaticPortSetup: false
     service:
       main:
         ports:
@@ -52,7 +47,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
           external-dns/is-public: "true"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "eye-circle"
+          hajimari.io/icon: "cloud-download"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - host: "qbittorrent.${SECRET_DOMAIN}"
@@ -62,20 +57,27 @@ spec:
         tls:
           - hosts:
               - "qbittorrent.${SECRET_DOMAIN}"
-    securityContext:
-      capabilities:
-        add:
-          - NET_ADMIN
-      sysctls:
-      - name: net.ipv4.conf.all.src_valid_mark
-        value: "1"
-      - name: net.ipv6.conf.all.disable_ipv6
-        value: "0"
+    # metrics:
+    #   enabled: true
+    #   exporter:
+    #     image:
+    #       repository: ghcr.io/k8s-at-home/prometheus-qbittorrent-exporter
+    #       tag: v1.2.0
+    #     env:
+    #       user: "${SECRET_QB_USERNAME}"
+    #       password: "${SECRET_QB_PASSWORD}"
+    #   serviceMonitor:
+    #     interval: 1m
+    #     scrapeTimeout: 10s
+    #   prometheusRule:
+    #     enabled: true
+    podSecurityContext:
+      supplementalGroups:
+        - 100
     persistence:
       config:
         enabled: true
         existingClaim: qbittorrent-config-v1
-        mountPath: /config
       media:
         enabled: true
         type: custom
@@ -89,4 +91,4 @@ spec:
         memory: 250Mi
         cpu: 500m
       limits:
-        memory: 750Mi
+        memory: 6000Mi
