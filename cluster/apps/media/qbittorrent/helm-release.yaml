@@ -24,41 +24,29 @@ spec:
     env:
       TZ: "America/Boise"
       WAIT_FOR_VPN: "true"
-    settings:
-      automaticPortSetup: false
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
-      bittorrent:
+    persistence:
+      config:
         enabled: true
-        type: LoadBalancer
-        ports:
-          bittorrent:
-            enabled: true
-            port: 50413
-            protocol: TCP
-            targetPort: 50413
-    ingress:
-      main:
+        existingClaim: qbittorrent-config-v1
+        mountPath: /config
+      media:
         enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-          external-dns/is-public: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "cloud-download"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hosts:
-          - host: "qbittorrent.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "qbittorrent.${SECRET_DOMAIN}"
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "truenas.${SECRET_DOMAIN}"
+            path: /mnt/storage0/Data
+            mountPath: /media
+      shared:
+        enabled: true
+        type: emptyDir
+        mountPath: /shared
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 6000Mi
     addons:
       vpn:
         enable: true
@@ -177,29 +165,3 @@ spec:
             #!/bin/bash
             /etc/openvpn/down.sh
             echo "disconnected" > /shared/vpnstatus
-    podSecurityContext:
-      supplementalGroups:
-        - 100
-    persistence:
-      config:
-        enabled: true
-        existingClaim: qbittorrent-config-v1
-        mountPath: /config
-      media:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "truenas.${SECRET_DOMAIN}"
-            path: /mnt/storage0/Data
-            mountPath: /media
-      shared:
-        enabled: true
-        type: emptyDir
-        mountPath: /shared
-    resources:
-      requests:
-        memory: 250Mi
-        cpu: 500m
-      limits:
-        memory: 6000Mi
