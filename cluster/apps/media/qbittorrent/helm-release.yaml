@@ -66,7 +66,7 @@ spec:
             repository: dperson/openvpn-client
             tag: latest
             pullPolicy: IfNotPresent
-          auth: "${SECRET_PIA_USERNAME};${SECRET_PIA_PASSWORD}"
+          authSecret: ${MY-VPN-SECRET}
         securityContext:
           runAsUser: 0
           runAsGroup: 0
