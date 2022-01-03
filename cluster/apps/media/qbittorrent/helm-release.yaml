@@ -181,9 +181,6 @@ spec:
             #!/bin/bash
             /etc/openvpn/down.sh
             echo "disconnected" > /shared/vpnstatus
-    podSecurityContext:
-      supplementalGroups:
-        - 100
     persistence:
       config:
         enabled: true
