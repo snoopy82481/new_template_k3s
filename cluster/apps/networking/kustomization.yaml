@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - traefik
   - external-dns
+  - vpn-gateway
