@@ -71,10 +71,11 @@ spec:
         enable: true
         type: openvpn
         openvpn:
-          # image:
-          #   repository: dperson/openvpn-client
-          #   tag: latest
-          #   pullPolicy: IfNotPresent
+          image:
+            repository: dperson/openvpn-client
+            tag: latest
+            pullPolicy: IfNotPresent
+            tty: true
           auth: |
             ${SECRET_PIA_USERNAME}
             ${SECRET_PIA_PASSWORD}
