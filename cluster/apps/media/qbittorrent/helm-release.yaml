@@ -62,10 +62,10 @@ spec:
         enable: true
         type: openvpn
         openvpn:
-          # image:
-          #   repository: dperson/openvpn-client
-          #   tag: latest
-          #   pullPolicy: IfNotPresent
+          image:
+            repository: dperson/openvpn-client
+            tag: latest
+            pullPolicy: IfNotPresent
           auth: |
             ${SECRET_PIA_USERNAME}
             ${SECRET_PIA_PASSWORD}
@@ -73,8 +73,9 @@ spec:
           runAsUser: 0
           runAsGroup: 0
           capabilities:
-            - NET_ADMIN
-            - SYS_MODULE
+            add:
+              - NET_ADMIN
+              - SYS_MODULE
         env:
           TZ: "America/Boise"
           FIREWALL: 'on'
