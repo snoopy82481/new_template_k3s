@@ -26,8 +26,8 @@ spec:
       PUID: 1001
       PGID: 1001
       UMASK: 002
-      # VPN_ENABLED: false
-      # VPN_CONF: wg0
+      VPN_ENABLED: true
+      VPN_CONF: wg0
     securityContext:
       capabilities:
         add:
