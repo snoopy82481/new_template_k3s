@@ -29,6 +29,14 @@ spec:
         ports:
           http:
             port: 8080
+      ui:
+        enabled: true
+        ports:
+          ui:
+            enabled: true
+            port: 8080
+            protocol: TCP
+            targetPort: 8080
       bittorrent:
         enabled: true
         type: LoadBalancer
@@ -38,6 +46,8 @@ spec:
             port: 50413
             protocol: TCP
             targetPort: 50413
+    settings:
+      automaticPortSetup: false
     ingress:
       main:
         enabled: true
@@ -80,7 +90,7 @@ spec:
           client
           dev tun
           proto tcp
-          remote ca-toronto.privacy.network 501
+          remote ca-ontario.privacy.network 501
           resolv-retry infinite
           nobind
           persist-key
@@ -89,6 +99,7 @@ spec:
           auth sha256
           tls-client
           remote-cert-tls server
+
           auth-user-pass
           compress
           verb 1
@@ -115,6 +126,7 @@ spec:
           yo37GFU+q1WPCplVZgCP9hC8Rn5K2+f6KLFo5bhtowSmu+GY1yZtg+RTtsA=
           -----END X509 CRL-----
           </crl-verify>
+
           <ca>
           -----BEGIN CERTIFICATE-----
           MIIHqzCCBZOgAwIBAgIJAJ0u+vODZJntMA0GCSqGSIb3DQEBDQUAMIHoMQswCQYD
@@ -160,7 +172,9 @@ spec:
           +no177N9L2Y+M9TcTA62ZyMXShHQGeh20rb4kK8f+iFX8NxtdHVSkxMEFSfDDyQ=
           -----END CERTIFICATE-----
           </ca>
+
           disable-occ
+
           script-security 2
           up /vpn/up.sh
           down /vpn/down.sh
