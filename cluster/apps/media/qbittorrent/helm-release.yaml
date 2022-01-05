@@ -59,7 +59,7 @@ spec:
               - "qbittorrent.${SECRET_DOMAIN}"
     addons:
       vpn:
-        enable: true
+        enabled: true
         type: openvpn
         openvpn:
           image:
@@ -75,7 +75,6 @@ spec:
         env:
           TZ: "America/Boise"
           FIREWALL: 'on'
-          ROUTE: '10.0.0.0/8'
         configFile: |-
           client
           dev tun
