@@ -19,8 +19,6 @@ spec:
           namespace: default
           serversTransport: proxmox
   tls:
-    - hosts:
-      - "proxmox.${SECRET_DOMAIN}"
     secretName: proxmox-prod-tls
 
 ---
