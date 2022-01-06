@@ -46,8 +46,6 @@ spec:
             port: 50413
             protocol: TCP
             targetPort: 50413
-    settings:
-      automaticPortSetup: false
     ingress:
       main:
         enabled: true
