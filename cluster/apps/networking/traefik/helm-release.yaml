@@ -79,13 +79,13 @@ spec:
     experimental:
       plugins:
         enabled: false
-    volumes:
-      - name: traefik-config
-        configMap:
-          name: traefik-configs
     resources:
       requests:
         memory: 100Mi
         cpu: 500m
       limits:
         memory: 500Mi
+  volumes:
+      - name: traefik-config
+        configMap:
+          name: traefik-configs
