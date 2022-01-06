@@ -8,4 +8,4 @@ spec:
       protocol: TCP
       port: 8006
       targetPort: https
-  type: LoadBalancer
+  type: ClusterIP
