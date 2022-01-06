@@ -47,6 +47,9 @@ spec:
             port: 50413
             protocol: TCP
             targetPort: 50413
+    podSecurityContext:
+      supplementalGroups:
+        - 100
     ingress:
       main:
         enabled: true
@@ -75,6 +78,8 @@ spec:
             pullPolicy: IfNotPresent
           auth: "${SECRET_PIA_USERNAME};${SECRET_PIA_PASSWORD}"
         securityContext:
+          runAsUser: 0
+          runAsGroup: 0
           capabilities:
             add:
               - NET_ADMIN
