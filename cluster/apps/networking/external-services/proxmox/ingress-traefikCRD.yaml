@@ -22,7 +22,6 @@ spec:
     secretName: proxmox-prod-tls
 
 ---
-
 apiVersion: traefik.containo.us/v1alpha1
 kind: ServersTransport
 metadata:
