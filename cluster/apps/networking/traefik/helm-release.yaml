@@ -71,6 +71,8 @@ spec:
         exposedPort: 8082
     volumeMounts:
       traefik-config:
+        configMap:
+          name: traefik-config
         mountPath: /etc/traefik
     tlsOptions:
       default:
@@ -88,7 +90,3 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
-  volumes:
-    traefik-config:
-      configMap:
-        name: traefik-configs
