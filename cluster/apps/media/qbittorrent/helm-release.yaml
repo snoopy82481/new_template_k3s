@@ -39,14 +39,14 @@ spec:
             protocol: TCP
             targetPort: 8080
       bittorrent:
-        enabled: true
-        type: LoadBalancer
+        enabled: false
+        type: ClusterIP
         ports:
           bittorrent:
             enabled: true
-            port: 50413
+            port: 6881
             protocol: TCP
-            targetPort: 50413
+            targetPort: 6881
     podSecurityContext:
       supplementalGroups:
         - 100
