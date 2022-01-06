@@ -85,7 +85,7 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
-    volumes:
-      - name: traefik-config
-        configMap:
-          name: traefik-configs
+  volumes:
+    - name: traefik-config
+      configMap:
+        name: traefik-configs
