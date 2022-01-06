@@ -31,6 +31,7 @@ spec:
             port: 8080
       ui:
         enabled: true
+        type: LoadBalancer
         ports:
           ui:
             enabled: true
