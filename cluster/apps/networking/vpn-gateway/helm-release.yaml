@@ -36,7 +36,7 @@ spec:
           TZ: ${TZ}
           IPTABLES_BACKEND: nft
           KILLSWITCH: "true"
-        configFileSecret: vpnconfig
+        configFileSecret: vpnConfig
         scripts:
           up: |-
             #!/bin/bash
