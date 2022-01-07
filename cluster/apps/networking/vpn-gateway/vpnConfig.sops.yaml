@@ -3,8 +3,9 @@ kind: Secret
 metadata:
     name: vpnConfig
     namespace: vpn
+type: Opaque
 stringData:
-    vpnConfigFile: ENC[AES256_GCM,data:icXIhY1+OF9vbf1PZHr8NrpOpTn5IXLMu6Fh+HyYzV/dCm/xJhvXpUQLCxZcTOjg3AOg7bvXMzdzAsDJWu7RBPwB+o+dipxRtmpilPq2AB5l1qqBhGSNYSnNLEUZOrNYaTMtz9Zr/66KPVGAIMRa+FS/Ww4HeTbqKEew3S8VpAQ8pgV54AEyqtzHsbhfsBqRiN18isXvniuK5798ROH8V2JsdyqzwXsLVoED6RLlZeDwwb5/qpFa6Fotjb04mIYACKI8E1bB23BLHjHncX0HnOar3W/rSAze4sLHkmltj28sMEZAQFtuiYFJYouegdpjioZAJkAgko1brEGZmwJV86PU3ihlBWzWKBRMAJwSm6iWEwu0ZMimflraaOb6sr6gr4vAN64OQ2mJHuqVONhOPFhABfvcj0HI0P/yruTw1CeMu67r/xdqrZQgvA0Rzf+K40bJ3FMkEnx+ngxKXuNVxYSoeyBnS6RDJcjlN2a1VU337mB+Q878GDZwtFGkayX+2kLBZwc3Us72pz860a3nFjEBUrveaWgWv9znRo7DM2Xlll31PkjyEcLSAc90AL/wFFOjuOTBtwyVJVNjV5llbHWhwxkV4v5ph3KtHo6Wmo0F55YrE2jmxkGrole2UAMP+aEMuUTRvJyiihGB7WAuNp0xq3xx5jZ2t/uXUQxTKLq/flfPD3QUaNJ45ZvzvXg3qxqWyX4RTAse3CDI8xwbnqbvgzfeeIuGyRbceseJhSLmc7azeo32o94jR3283lzz9Lnts7E2vJHmfEitrIANPhuFadTh4D+lOM680zdty3b+dn4WnZAE2T58Jy01MDycldYntx8DClRPHYLVqy/aKz2kboh0o5gIugpC4wI/QphRF/U=,iv:BV45zEq9z3nPDETrvd5P629FTl00rmgtuO/VNOAf2uQ=,tag:ZdzlDdTo+cWwF9mDyDO5yw==,type:str]
+    vpnConfigFile: ENC[AES256_GCM,data:lYMOZ8QqTDivhlLXavLFuxTfuM/m6fE4dBzSFO7krUnHN9eCTjEa01EcMFj8k6KmoaiiVUbaRUQOkQoBaIEwoFgWVqq+vPGyLdvMc5KCfPYsKDKv/0hwce9mD3MD+M9jaGFwsK6TqpWE9biNbhXigYS7JoGaN5hzc0VEhy2HPQrbbR0nuZCRK83dBY/sQgIvSumQzQlWKAmearx1ouMZk5noj4k6jv4sTf9y0dRyPiM1odaRzhhnfBu/zNoKv+A3jF/iAWWM1bGk0V4sfOi1V9EgZcuP/6+458T5z04k2Pz3Z2galFL6LbT4kt/389jMbAVAA78OeJGBrtIlOunVgzWRUrqdVyPLUanBza/tavBIHAotwD2qJysLzUifv0GoXC698DXkCc8Toobgt3dEemPfkT13R99RAUwUfDPpllgwAdJ7Wiapt54g+nc4GTzAvggaOUqe1Dx/x6KtqoAdPOGXg1riioJxyYSRq8RuudKiEhR4z3gquX9w3SsdDYrT0ezemxND3J+WnJi4noWASWj7A7mbvRrpznhW6xOYQxlNURUd3aG8Mz8OigZNMjPAubjq6vHV3ctTtuKI7rjmYAyuQaw5XQwrKbyPgNY+G0UVsAhdGy7HotVZ6BA2dhbSWkHvrKcd8Ndf9wvBuReX5Yj3+jfwC8Zs0QZdeCuxjvC2yyb/dOAgpLOmIXr2yYG/h/94aGOAW9Bxfk+5n2r7UsWbtMCmO6mGFTl2J8zepI6KWiSH2cRDaRLIAuLOC1YCdaoovK2Z1C2ZeiMafxm1+g2BS567kjS25O9CZp/VJ062L2p5XzLHFX2kVGkVqRbZ4pIrC7MGHj8MnAAMwvW2i4CupWrkEP4U7G2JabZodf3L4w==,iv:KnBpgLUvao4m2CO5Li68Nlz91qqqqs5ZjOli4WOGTBo=,tag:JXgwoPGykoqsC70z8szQJA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -20,8 +21,8 @@ sops:
             UzBFZVRwN0J0dlNMb3oyQ08wclVLQ0kK15nnKWE8159zQbuSMvzmxisCbXSn1x51
             i2XqNqNR//gKd+sUNiT8jXgkPnZdCJ9Pkvx1M6t1LjqfRp/NwJrm3Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-01-07T20:21:36Z"
-    mac: ENC[AES256_GCM,data:PSVKiddD4sl+cVqa5D3YqYLNwbfJ4d49Q+K3znHcIbJmZJKTjlVf484dq5kd9GjCurPCwFpuL0CgaDiR5k5/QZeonIORQhJ8m1x9EYIhPFuJ5Jzz9vShQCosOPt/l2w7KiilsDSY3Xz82RApwHAeYcrXWkImQLrWuJxea45WA38=,iv:cvjvSkgqwy+BJDhIlLymNq8TJ10ztyVKCpfGAXCpv2Y=,tag:df2KdaBf+XKozKTK2p3AJQ==,type:str]
+    lastmodified: "2022-01-07T20:37:46Z"
+    mac: ENC[AES256_GCM,data:cK80xfcPrhbR4MBIdkBYkF5ewx/FaH6kN1OsI+gRkrrT2iIIV4U23D6W7UGfsNC1H+Eui8G/ZY4Sm5EqOCpD4J6urmNMfN9+ESgjpoM4iO2kLAXq9mKBcpN/GhRNc8Rz1ykzVOGOYhCWMtd0+enlkXbWRgFAis0jE0f67ZsUc+M=,iv:DqkL3AyJYfrCiQOPse/gbv/W9TkGTjZyvz7GXUq0oCM=,tag:5MgBsGlA/mhmzVRznb8rwA==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.7.1
