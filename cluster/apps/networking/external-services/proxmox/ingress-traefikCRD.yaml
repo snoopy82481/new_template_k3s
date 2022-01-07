@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`proxmox.${SECRET_DOMAIN}`)
+      match: Host(`proxmox.${SECRET_LOCAL_DOMAIN}`)
       middlewares:
         - name: headers@file
         - name: local-only@file
