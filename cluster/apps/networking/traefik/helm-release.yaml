@@ -69,11 +69,6 @@ spec:
         port: 8082
         expose: true
         exposedPort: 8082
-    volumeMounts:
-      traefik-config:
-        configMap:
-          name: traefik-config
-        mountPath: /etc/traefik
     tlsOptions:
       default:
         minVersion: VersionTLS12
@@ -84,6 +79,11 @@ spec:
     experimental:
       plugins:
         enabled: false
+    persistence:
+      traefik-config:
+        enabled: true
+        type: configMap
+        name: traefik-configs
     resources:
       requests:
         memory: 100Mi
