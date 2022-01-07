@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: Secret
 metadata:
-    name: jackett
-    namespace: sonarr
+    name: vpnConfig
+    namespace: vpn
 stringData:
     vpnConfigfile: ENC[AES256_GCM,data:+oF/YKoB3VpQKhXwHebjS7qbvSqQCiQj64mkvdUEDwMNOPS0S7ayhJGqlXlCbOWd3M55UiCWBSbYWQqlCdP5jHsiNc8+nil1WRYGTMHTsoo5uger8d9yhqcFvgiEJ3lvPK5u/dNoE1zuAbCImhrI9GJuFoUEduRBRJt8jvtjXr620H2keB79eNukHrZ88gTAtWL8aILW5osSCDoUPj210yAXfqIjyfSwZ7MOsNydV21Xhn/RfiirzYdhz8naLDHBasw443P1I2eHNKHka73fOCvDkdJAsB34oVd82tKrsmZiBObAtRAam1JK9s2pfNNk0LJKzR9JrON62hICG4wr5zNHbNCc3jEjEobxJ861tI+ucVUs1SberwdCm/pHmcSigCRF3k2lAkF71xJksJVvgX80jSATHfdhgmF8ed6F6MSt7mn8VB1N2MMbqWkw3/T5q0hmhlBaa0Pj4EyJu5xOynHee559WV3Rq1vSKy5FFYORLW08AjoH08W8pRbH/8sPXbGOsVMJUfh3JHNAAEKrTh0oSEYWCjX6pHSYcvpf5l2NbOeVEkSpJpoqfsEUwYXABTL+ggky6wutk/OkFCzFQlTxAkTQnMeUUt/9ZrpvfKlz9RKluFvDjPl43cS7GABRJsp4+pQ1AgpDHyfVbrdlgqWVRkGspau6UHK4k1tagIhnmSeDuvnQCYX0aU2zf08zMiz2XnYmEeI/3LqqeMW5HYekLOy9SJE6WHWqSHunKmF1cS8uOQyUUqQw1fziojfZJVu1l6h1z7SuHbVSMTPXFQmdALnA7Ozu3MBfSxavr88yD1RPDPOPgYHsDFjNT1k4z5Yn62wzbkBm9oZz5rSQZtsXxlFG5Pt+qxqvvg1mudXXO9o=,iv:0/CS3HXKXMzNqNfmGBQykcfayTIxXm5TduMNy0pAzj0=,tag:jrvkgpmPagF4HK6LZlwQ8g==,type:str]
 sops:
@@ -21,8 +21,8 @@ sops:
             UzBFZVRwN0J0dlNMb3oyQ08wclVLQ0kK15nnKWE8159zQbuSMvzmxisCbXSn1x51
             i2XqNqNR//gKd+sUNiT8jXgkPnZdCJ9Pkvx1M6t1LjqfRp/NwJrm3Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-01-07T20:42:33Z"
-    mac: ENC[AES256_GCM,data:6GiWsKPeUUKkPzUwV0A/oZmfWHRDjzyW/mzPGA0pR1kXCvMNb9ZksV42Dc6utRSkM/OfPpac5yLWPUBsAxH/yJPQxxlrENiHlYBLmcaUg26otHFcfJtj7QvgV9SM8CdbUDqPethpHPpdDJm2OW9P+jDDICmsXoowHFZJls3K63I=,iv:XUREPXAJYt3v2S4PCRSrgP0VPu6WUMxQCE+kuriSGFs=,tag:aa400llw2EZcgvxE7qiY0g==,type:str]
+    lastmodified: "2022-01-07T20:43:06Z"
+    mac: ENC[AES256_GCM,data:DByTwZulmWrVmx69w+SPnuto/NQ15Zo7dJQwNVrhrJdt5l3RfQTkbbZLXfa/k/JbQvhzjDWPywz7o7ycT0V1p4uJr2tGYM8lifoEdYNnQ4yVcsl5Z89Mo/koLr5nqaiYoWKQqnCqQLNTGghGEoWaFTRcoK0JyQ6uzQzUt3p760o=,iv:aHHacu4XukdqXxMQromNJwwYXtcwW56/jz8K//X6gc8=,tag:CEYhfKwuT4Zo1DPyVUrYVQ==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.7.1
