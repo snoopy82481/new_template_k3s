@@ -19,6 +19,8 @@ data:
             forceSTSHeader: true
             frameDeny: true
             customFrameOptionsValue: SAMEORIGIN
+            customRequestHeaders:
+              X-Forwarded-Proto: https
             contentTypeNosniff: true
             browserXSSFilter: true
         dashboard-headers:
