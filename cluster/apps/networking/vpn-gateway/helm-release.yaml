@@ -98,4 +98,4 @@ spec:
       gatewayLabel: setGateway
       gatewayAnnotation: setGateway
       namespaceSelector:
-        label: vpn
+        label: routed-gateway
