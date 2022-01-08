@@ -5,4 +5,4 @@ resources:
   - traefik
   - external-dns
   - external-services
-  - vpn-gateway
+  # - vpn-gateway
