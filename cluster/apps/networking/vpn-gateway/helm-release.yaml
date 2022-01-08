@@ -35,17 +35,17 @@ spec:
         env:
           TZ: ${TZ}
           IPTABLES_BACKEND: nft
-          KILLSWITCH: "true"
+          KILLSWITCH: "false"
         configFileSecret: vpnconfig
-        scripts:
-          up: |-
-            #!/bin/bash
-            /etc/openvpn/up.sh
-            echo "connected" > /shared/vpnstatus
-          down: |-
-            #!/bin/bash
-            /etc/openvpn/down.sh
-            echo "disconnected" > /shared/vpnstatus
+        # scripts:
+        #   up: |-
+        #     #!/bin/bash
+        #     /etc/openvpn/up.sh
+        #     echo "connected" > /shared/vpnstatus
+        #   down: |-
+        #     #!/bin/bash
+        #     /etc/openvpn/down.sh
+        #     echo "disconnected" > /shared/vpnstatus
         resources:
           requests:
             cpu: 100m
