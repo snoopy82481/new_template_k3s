@@ -8,3 +8,4 @@ resources:
   - media.yaml
   - rook-ceph.yaml
   - vpn.yaml
+  - downloads.yaml

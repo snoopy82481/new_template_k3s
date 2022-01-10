@@ -75,7 +75,7 @@ spec:
                 - ipBlock:
                     cidr: 10.0.0.0/8
     routed_namespaces:
-      - vpn
+      - downloads
     settings:
       VPN_INTERFACE: wg0
       VPN_BLOCK_OTHER_TRAFFIC: true
@@ -98,4 +98,4 @@ spec:
       gatewayLabel: setGateway
       gatewayAnnotation: setGateway
       namespaceSelector:
-        label: routed-gateway
+        label: "vpn-routed-gateway"
