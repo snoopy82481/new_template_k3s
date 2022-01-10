@@ -37,8 +37,15 @@ spec:
             port: 8080
             protocol: TCP
             targetPort: 8080
-    # podAnnotations:
-    #   setGateway: true
+       bittorrent:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          bittorrent:
+            enabled: true
+            port: 50413
+            protocol: TCP
+            targetPort: 50413
     ingress:
       main:
         enabled: true
