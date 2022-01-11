@@ -23,6 +23,19 @@ data:
               X-Forwarded-Proto: https
             contentTypeNosniff: true
             browserXSSFilter: true
+        local-headers:
+            sslRedirect: true
+            sslHost: "${SECRET_DOMAIN}"
+            stsSeconds: 315360000
+            stsIncludeSubdomains: true
+            stsPreload: true
+            forceSTSHeader: true
+            frameDeny: true
+            customFrameOptionsValue: SAMEORIGIN
+            customRequestHeaders:
+              X-Forwarded-Proto: https
+            contentTypeNosniff: true
+            browserXSSFilter: true
         dashboard-headers:
           headers:
             sslRedirect: true
