@@ -38,6 +38,7 @@ spec:
         tls:
           - hosts:
               - "sonarranime.${SECRET_DOMAIN}"
+            secretName: sonarranime-tls
     podSecurityContext:
       supplementalGroups:
         - 100

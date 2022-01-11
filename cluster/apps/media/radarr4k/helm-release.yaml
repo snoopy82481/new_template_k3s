@@ -38,6 +38,7 @@ spec:
         tls:
           - hosts:
               - "radarr4k.${SECRET_DOMAIN}"
+            secretName: radarr4k-tls
     podSecurityContext:
       supplementalGroups:
         - 100
