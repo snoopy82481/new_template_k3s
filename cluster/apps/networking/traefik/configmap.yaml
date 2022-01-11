@@ -25,7 +25,7 @@ data:
             browserXSSFilter: true
         local-headers:
             sslRedirect: true
-            sslHost: "${SECRET_DOMAIN}"
+            sslHost: "${SECRET_LOCAL_DOMAIN}"
             stsSeconds: 315360000
             stsIncludeSubdomains: true
             stsPreload: true
