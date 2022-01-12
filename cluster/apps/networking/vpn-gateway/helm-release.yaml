@@ -32,7 +32,7 @@ spec:
         env:
           TZ: ${TZ}
           IPTABLES_BACKEND: nft
-          KILLSWITCH: "true"
+          KILLSWITCH: "false"
         configFileSecret: vpnconfig
         # scripts:
         #   up: |-
