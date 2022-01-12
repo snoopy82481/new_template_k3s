@@ -4,7 +4,6 @@ kind: HelmRelease
 metadata:
   name: vpn-gateway
   namespace: vpn
-  labels:
 spec:
   interval: 5m
   chart:
@@ -30,8 +29,6 @@ spec:
           image:
             repository: ghcr.io/k8s-at-home/wireguard
             tag: v1.0.20210914
-        securityContext:
-          privileged: true
         env:
           TZ: ${TZ}
           IPTABLES_BACKEND: nft
@@ -52,15 +49,15 @@ spec:
             memory: 128Mi
           limits:
             memory: 512Mi
-        # livenessProbe:
-        #   exec:
-        #     command:
-        #       - sh
-        #       - -c
-        #       - if [ $(curl -s https://ipinfo.io/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
-        #   initialDelaySeconds: 30
-        #   periodSeconds: 60
-        #   failureThreshold: 1
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - if [ $(curl -s https://ipinfo.io/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          failureThreshold: 1
         networkPolicy:
           enabled: true
           egress:
