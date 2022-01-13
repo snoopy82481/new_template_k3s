@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: pia_cert
+    name: piacert
     namespace: vpn
 data:
     ca.rsa.4096.crt: |
