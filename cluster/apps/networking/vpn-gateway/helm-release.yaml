@@ -58,6 +58,10 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           failureThreshold: 1
+        securityContext:
+          sysctl:
+          - name: net.ipv4.conf.all.src_valid_mark
+            value: 1
         networkPolicy:
           enabled: true
           egress:
@@ -66,7 +70,7 @@ spec:
                     cidr: 0.0.0.0/0
               ports:
                 # VPN traffic
-                - port: 1337
+                - port: 51820
                   protocol: UDP
             - to:
                 - ipBlock:
@@ -76,8 +80,8 @@ spec:
     DNS: 1.1.1.1
     settings:
       VPN_INTERFACE: wg0
-      VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_TRAFFIC_PORT: 1337
+      VPN_BLOCK_OTHER_TRAFFIC: false
+      VPN_TRAFFIC_PORT: 51820
       VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16"
     publicPorts:
@@ -85,9 +89,9 @@ spec:
         IP: 10
         ports:
           - type: tcp
-            port: 1337
+            port: 50413
           - type: udp
-            port: 1337
+            port: 50413
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
