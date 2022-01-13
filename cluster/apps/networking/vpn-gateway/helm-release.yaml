@@ -93,6 +93,12 @@ spec:
             port: 50413
           - type: udp
             port: 50413
+    persistence:
+      piacert:
+        enabled: true
+        type: configMap
+        name: piacert
+      mountPath: /
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
