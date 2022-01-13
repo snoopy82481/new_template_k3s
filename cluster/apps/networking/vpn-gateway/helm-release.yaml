@@ -53,7 +53,7 @@ spec:
           exec:
             command:
               - sh
-              - c
+              - -c
               - if [ $(curl -s https://ipinfo.io/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
           initialDelaySeconds: 30
           periodSeconds: 60
