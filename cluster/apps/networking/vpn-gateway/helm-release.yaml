@@ -32,7 +32,7 @@ spec:
         env:
           TZ: ${TZ}
           IPTABLES_BACKEND: nft
-          KILLSWITCH: "false"
+          KILLSWITCH: false
         configFileSecret: vpnconfig
         # scripts:
         #   up: |-
@@ -70,27 +70,28 @@ spec:
                     cidr: 0.0.0.0/0
               ports:
                 # VPN traffic
-                - port: 51820
+                - port: 1337
                   protocol: UDP
             - to:
                 - ipBlock:
                     cidr: 10.0.0.0/8
     routed_namespaces:
       - downloads
+    DNS: 1.1.1.1
     settings:
       VPN_INTERFACE: wg0
       VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_TRAFFIC_PORT: 51820
+      VPN_TRAFFIC_PORT: 1337
       VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16"
-    # publicPorts:
-    #   - hostname: qbittorrent
-    #     IP: 10
-    #     ports:
-    #       - type: tcp
-    #         port: 50413
-    #       - type: udp
-    #         port: 50413
+    publicPorts:
+      - hostname: qbittorrent
+        IP: 10
+        ports:
+          - type: tcp
+            port: 1337
+          - type: udp
+            port: 1337
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
