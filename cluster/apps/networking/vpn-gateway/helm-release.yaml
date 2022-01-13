@@ -98,7 +98,6 @@ spec:
         enabled: true
         type: configMap
         name: piacert
-      mountPath: /
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
