@@ -58,10 +58,6 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           failureThreshold: 1
-        securityContext:
-          sysctl:
-          - name: net.ipv4.conf.all.src_valid_mark
-            value: 1
         networkPolicy:
           enabled: true
           egress:
