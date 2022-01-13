@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - vpnConfig.sops.yaml
-  - pia_cert.sops.yaml
+  - pia_cert.yaml
