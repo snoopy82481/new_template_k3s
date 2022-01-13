@@ -52,7 +52,7 @@ spec:
         livenessProbe:
           exec:
             command:
-              - bash
+              - /bin/bash
               - c
               - if [ $(curl -s https://ipinfo.io/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
           initialDelaySeconds: 30
@@ -61,8 +61,8 @@ spec:
         securityContext:
           capabilities:
             add:
-            - NET_ADMIN
-            - SYS_MODULE
+              - NET_ADMIN
+              - SYS_MODULE
         networkPolicy:
           enabled: true
           egress:
