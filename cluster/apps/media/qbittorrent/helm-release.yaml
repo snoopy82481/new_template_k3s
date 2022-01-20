@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: qbittorrent
-  namespace: downloads
+  namespace: media
 spec:
   interval: 5m
   chart:
@@ -23,6 +23,7 @@ spec:
       pullPolicy: IfNotPresent
     env:
       TZ: "America/Boise"
+      WAIT_FOR_VPN: true
     service:
       main:
         ports:
@@ -81,6 +82,24 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /shared
+    addons:
+      vpn:
+        enabled: true
+        type: wireguard
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+        env:
+          KILLSWITCH: true
+        configFileSecret: vpnconfig
+        scripts:
+          up: |-
+            #!/bin/bash
+            echo "connected" > /shared/vpnstatus
+
+          down: |-
+            #!/bin/bash
+            echo "disconnected" > /shared/vpnstatus
     resources:
       requests:
         memory: 250Mi
