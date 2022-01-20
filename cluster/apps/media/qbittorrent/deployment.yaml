@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qBittorent
+  namespace: media
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    spec:
+      containers:
+        - name: qBittorent
+          image: cr.hotio.dev/hotio/qbittorrent
+          tag: release
+          pullPolicy: IfNotPresent
+          ports:
+            - name: qbittorrent-ui
+              containerPort: 8080
+            - name: qbittorrent
+              containerPort: 8118
+          env:
+            TZ: "America/Boise"
+            PUID: 1001
+            PGID: 1001
+            UMASK: 002
+            VPN_ENABLED: true
+            VPN_CONF: wg0
+            PRIVOXY_ENABLED: false
+            VPN_IP_CHECK_DELAY: 5
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+            sysctl:
+              net.ipv4.conf.all.src_valid_mark: 1
+              net.ipv6.conf.all.disable_ipv6: 0
+          volumeMounts:
+            - name: qbittorrent-config-v1
+              mountPath: /config
+            - name: wg0ConfigFile
+              mountPath: /config/wireguard/wg0.conf
+              subPath: wg0.conf
+              readOnly: true
+      volumes:
+        - name: wg0ConfigFile
+          secret:
+            secretName: vpnConfig
+            items:
+              - key: vpnConfigfile
+        - name: qbittorrent-config-v1
+          persistentVolumeClaim:
+            claimName: qbittorrent-config-v1
