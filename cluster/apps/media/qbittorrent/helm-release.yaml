@@ -89,8 +89,9 @@ spec:
         securityContext:
           runAsUser: 568
           runAsGroup: 568
-          sysctl:
-              net.ipv4.conf.all.src_valid_mark: 1
+          add:
+            sysctl:
+                net.ipv4.conf.all.src_valid_mark: 1
         env:
           KILLSWITCH: true
         configFileSecret: vpnconfig
