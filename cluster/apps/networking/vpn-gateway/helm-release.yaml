@@ -16,7 +16,6 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
-
   values:
     image:
       repository: ghcr.io/k8s-at-home/pod-gateway
@@ -29,10 +28,11 @@ spec:
           image:
             repository: ghcr.io/k8s-at-home/wireguard
             tag: v1.0.20210914
+            pullPolicy: IfNotPresent
         env:
           TZ: ${TZ}
           IPTABLES_BACKEND: nft
-          KILLSWITCH: true
+          KILLSWITCH: false
         configFileSecret: vpnconfig
         # scripts:
         #   up: |-
@@ -59,16 +59,17 @@ spec:
         #   periodSeconds: 60
         #   failureThreshold: 1
         securityContext:
+          runAsUser: 568
+          runAsGroup: 568
           capabilities:
-            add:
-              - NET_ADMIN
+            drop:
               - SYS_MODULE
         networkPolicy:
           enabled: true
           egress:
             - to:
                 - ipBlock:
-                    cidr: 0.0.0.0/0
+                    cidr: 10.0.0.0/0
               ports:
                 # VPN traffic
                 - port: 1337
@@ -78,9 +79,12 @@ spec:
                     cidr: 10.0.0.0/8
     routed_namespaces:
       - downloads
-    DNS: 1.1.1.1
+    DNS: 192.168.0.1
     settings:
       VPN_INTERFACE: wg0
+      VXLAN_ID: 43
+      VXLAN_IP_NETWORK: 172.16.0
+      VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
       VPN_BLOCK_OTHER_TRAFFIC: true
       VPN_TRAFFIC_PORT: 1337
       VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
@@ -93,16 +97,14 @@ spec:
             port: 50413
           - type: udp
             port: 50413
-    persistence:
-      piacert:
-        enabled: true
-        type: configMap
-        name: piacert
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
         tag: v3.4.0
-      gatewayDefault: true
+      replicas: 1
+      strategy:
+        type: RollingUpdate
+      gatewayDefault: false
       gatewayLabel: setGateway
       gatewayAnnotation: setGateway
       namespaceSelector:
