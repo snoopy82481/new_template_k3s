@@ -20,6 +20,7 @@ spec:
     image:
       repository: cr.hotio.dev/hotio/prowlarr
       tag: nightly
+      pull_policy: always
     env:
       TZ: "America/Boise"
       PUID: 1001
