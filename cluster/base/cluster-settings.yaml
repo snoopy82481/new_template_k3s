@@ -5,7 +5,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
-  METALLB_LB_RANGE: 192.168.21.2-192.168.21.20
+  METALLB_LB_RANGE: 192.168.21.2-192.168.21.254
   METALLB_TRAEFIK_ADDR: 192.168.21.2
   TZ: "America/Boise"
   VPN_COUNTRY: "US"
