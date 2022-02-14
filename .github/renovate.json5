@@ -1,6 +1,7 @@
 {
   "enabled": true,
   "platform": "github",
+  "username": "snoopy82481",
   "repositories": ["snoopy82481/new_template_k3s"],
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
