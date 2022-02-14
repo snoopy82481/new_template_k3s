@@ -33,6 +33,12 @@ jobs:
         uses: actions/checkout@v2
       - name: Verify Renovate Configuration
         uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.2
+      - name: Generate Token
+        uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: "${{ secrets.BOT_APP_ID }}"
+          private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
       - name: Override default config from dispatch variables
         run: |
           echo "DRY_RUN=${{ github.event.inputs.dryRun || env.DRY_RUN }}" >> "${GITHUB_ENV}"
@@ -41,4 +47,4 @@ jobs:
         uses: renovatebot/github-action@v31.81.3
         with:
           configurationFile: .github/renovate.json5
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: "x-access-token:${{ steps.generate-token.outputs.token }}"
