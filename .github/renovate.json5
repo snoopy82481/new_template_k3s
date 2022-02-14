@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "platform": "github",
-  "username": "snoopy82481-bot",
+  "username": "snoopy82481",
   "onboarding": false,
   "requireConfig": false,
   "repositories": ["snoopy82481/new_template_k3s"],
