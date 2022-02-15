@@ -1,4 +1,5 @@
 # Template for deploying k3s backed by Flux
+
 <div align="center">
 
 [![k3s](https://img.shields.io/badge/k3s-v1.22.3-brightgreen?style=for-the-badge&logo=kubernetes&logoColor=white)](https://k3s.io/)
@@ -59,7 +60,7 @@ For provisioning the following tools will be used:
 #### Required
 
 | Tool                                               | Purpose                                                                                                                                 |
-|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | [ansible](https://www.ansible.com)                 | Preparing Ubuntu for Kubernetes and installing k3s                                                                                      |
 | [direnv](https://github.com/direnv/direnv)         | Exports env vars based on present working directory                                                                                     |
 | [flux](https://toolkit.fluxcd.io/)                 | Operator that manages your k8s cluster based on your Git repository                                                                     |
@@ -74,7 +75,7 @@ For provisioning the following tools will be used:
 #### Optional
 
 | Tool                                                   | Purpose                                                  |
-|--------------------------------------------------------|----------------------------------------------------------|
+| ------------------------------------------------------ | -------------------------------------------------------- |
 | [helm](https://helm.sh/)                               | Manage Kubernetes applications                           |
 | [kustomize](https://kustomize.io/)                     | Template-free way to customize application configuration |
 | [pre-commit](https://github.com/pre-commit/pre-commit) | Runs checks pre `git commit`                             |
@@ -245,7 +246,7 @@ cat ~/.config/sops/age/keys.txt |
 
 5. If you verified all the secrets are encrypted, you can delete the `tmpl` directory now
 
-6.  Push you changes to git
+6. Push you changes to git
 
 ```sh
 git add -A

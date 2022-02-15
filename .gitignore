@@ -16,3 +16,4 @@ xanmanning.k3s*
 .terraform.tfstate*
 terraform.tfstate*
 cluster/apps/media/qbittorrent/helm-release_old.yaml
+.taskfiles/format_old.yml
