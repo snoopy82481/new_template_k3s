@@ -1,5 +1,6 @@
 {
-  "packageRules": [{
+  "packageRules": [
+    {
       "matchUpdateTypes": ["major"],
       "labels": ["type/major"]
     },

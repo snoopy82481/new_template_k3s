@@ -1,5 +1,6 @@
 {
-  "packageRules": [{
+  "packageRules": [
+    {
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["major"],
       "commitMessagePrefix": "feat(container)!: "
