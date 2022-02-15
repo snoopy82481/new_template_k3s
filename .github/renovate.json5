@@ -10,6 +10,7 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+  "commitBodyTable": true,
   "extends": [
     ":enableRenovate",
     "config:base",
@@ -32,6 +33,11 @@
     "ghcr.io/fluxcd/notification-controller",
     "ghcr.io/fluxcd/source-controller"
   ],
+  "docker-compose": {
+    "fileMatch": [
+      "provision/ansible/.+/docker-compose.*\\.ya?ml(\\.j2)?$"
+    ]
+  },
   "flux": {
     "fileMatch": [
       "cluster/.+\\.ya?ml$"
@@ -40,6 +46,11 @@
   "helm-values": {
     "fileMatch": [
       "cluster/.+\\.ya?ml$"
+    ]
+  },
+  "helmv3": {
+    "fileMatch": [
+      "charts/.+/Chart\\.ya?ml$"
     ]
   },
   "kubernetes": {
