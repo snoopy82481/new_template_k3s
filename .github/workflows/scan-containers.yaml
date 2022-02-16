@@ -7,7 +7,7 @@ on: # yamllint disable-line rule:truthy
       - main
     paths:
       - "cluster/**.yaml"
-      - "ansible/**.yml.j2"
+      - "provision/ansible/**.yml.j2"
 
 jobs:
   detect-file-changes:
