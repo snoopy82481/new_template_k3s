@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: qbittorrent
-  namespace: media
+  namespace: downloads
 spec:
   interval: 5m
   chart:
@@ -19,11 +19,19 @@ spec:
   values:
     image:
       repository: ghcr.io/k8s-at-home/qbittorrent
-      tag: v4.4.0
-      pullPolicy: IfNotPresent
+      tag: v4.3.9
+      pullPolicy: Always
+    hostname: qbittorrent
+    podAnnotations:
+      setGateway: "true"
+    podSecurityContext:
+      supplementalGroups:
+        - 65539
+    settings:
+      automaticPortSetup: false
     env:
       TZ: "America/Boise"
-      WAIT_FOR_VPN: true
+      UMASK: "022"
     service:
       main:
         ports:
@@ -82,26 +90,6 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /shared
-    addons:
-      vpn:
-        enabled: true
-        type: wireguard
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
-          sysctls:
-            net.ipv4.conf.all.src_valid_mark: 1
-        env:
-          KILLSWITCH: true
-        configFileSecret: vpnconfig
-        scripts:
-          up: |-
-            #!/bin/bash
-            echo "connected" > /shared/vpnstatus
-
-          down: |-
-            #!/bin/bash
-            echo "disconnected" > /shared/vpnstatus
     resources:
       requests:
         memory: 250Mi
