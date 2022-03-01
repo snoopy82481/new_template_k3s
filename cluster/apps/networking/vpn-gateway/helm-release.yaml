@@ -95,9 +95,9 @@ spec:
         IP: 10
         ports:
           - type: tcp
-            port: ${VPN_FORWARDED_PORT_1}
+            port: ${VPN_FORWARD_PORT_1}
           - type: udp
-            port: ${VPN_FORWARDED_PORT_1}
+            port: ${VPN_FORWARD_PORT_1}
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
