@@ -43,7 +43,6 @@ spec:
               command:
                 - /app/trash
               args:
-                - sonarr
                 - --config
                 - /config/trash.yaml
               volumeMounts:
