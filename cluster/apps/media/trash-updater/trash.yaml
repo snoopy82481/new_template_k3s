@@ -1,0 +1,276 @@
+sonarr:
+  - base_url: http://10.43.103.88:8989
+    api_key: ${SONARR_APIKEY}
+
+    quality_definition: series
+    release_profiles:
+      - type: series
+        filter:
+          include_optional: true
+        tags:
+          - tv
+
+  - base_url: http://10.43.25.35:8989
+    api_key: ${SONARR_ANIME_APIKEY}
+
+    quality_definition: anime
+
+    release_profiles:
+      - type: anime
+        strict_negative_scores: true
+        filter:
+          include_optional: true
+        tags:
+          - anime
+
+radarr:
+  - base_url: http://10.43.64.0:7878
+    api_key: ${RADARR_APIKEY}
+
+    quality_definition:
+      type: movie
+
+    delete_old_custom_formats: true
+
+    custom_formats:
+      - names:
+          - BR-DISK
+          - EVO (no WEBDL)
+          - LQ
+          - x265 (720/1080p)
+          - 3D
+          - No-RlsGroup
+          - Obfuscated
+          - DV (WEBDL)
+          - Hybrid
+          - Remaster
+          - 4K Remaster
+          - Criterion Collection
+          - Special Edition
+          - IMAX
+          - IMAX Enhanced
+          - HQ
+          - HQ-WEBDL
+          - HQ-Remux
+          - Repack/Proper
+          - FreeLeech
+
+        quality_profiles:
+          - name: Anime 1080p (Movie Versions + Misc)
+          - name: Anime 1080p (Movie Versions + Misc)!
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+          - name: Bluray-1080p (Movie Versions + Misc)
+          - name: Bluray-1080p (Movie Versions + Misc)!
+          - name: Remux-1080p (Audio Advanced + Movie Versions)
+          - name: Remux-1080p (Audio Advanced + Movie Versions)!
+
+      - names:
+          - Multi
+
+        quality_profiles:
+          - name: Anime 1080p (Movie Versions + Misc)
+            score: -9999
+          - name: Anime 1080p (Movie Versions + Misc)!
+            score: -9999
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
+            score: -9999
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+            score: -9999
+          - name: Bluray-1080p (Movie Versions + Misc)
+            score: -9999
+          - name: Bluray-1080p (Movie Versions + Misc)!
+            score: -9999
+          - name: Remux-1080p (Audio Advanced + Movie Versions)
+            score: -9999
+          - name: Remux-1080p (Audio Advanced + Movie Versions)!
+            score: -9999
+
+      - names:
+          - TrueHD ATMOS
+          - DTS X
+          - ATMOS (undefined)
+          - DD+ ATMOS
+          - TrueHD
+          - DTS-HD MA
+          - FLAC
+          - PCM
+          - DTS-HD HRA
+          - DD+
+          - DTS-ES
+          - DTS
+          - AAC
+          - DD
+
+        quality_profiles:
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+          - name: Remux-1080p (Audio Advanced + Movie Versions)
+          - name: Remux-1080p (Audio Advanced + Movie Versions)!
+
+      - names:
+          - Anime Dual Audio
+
+        quality_profiles:
+          - name: Anime 1080p (Movie Versions + Misc)
+            score: 100
+          - name: Anime 1080p (Movie Versions + Misc)!
+            score: 100
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
+            score: 100
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+            score: 100
+
+  - base_url: http://10.43.112.75:7878
+    api_key: ${RADARR_UHD_APIKEY}
+
+    quality_definition:
+      type: movie
+
+    delete_old_custom_formats: true
+
+    custom_formats:
+      - names:
+          - BR-DISK
+          - EVO (no WEBDL)
+          - LQ
+          - x265 (720/1080p)
+          - 3D
+          - No-RlsGroup
+          - Obfuscated
+          - DV (WEBDL)
+          - DV
+          - DV HLG
+          - DV SDR
+          - Hybrid
+          - Remaster
+          - 4K Remaster
+          - Criterion Collection
+          - Special Edition
+          - IMAX
+          - IMAX Enhanced
+          - HQ
+          - HQ-WEBDL
+          - HQ-Remux
+          - Repack/Proper
+          - FreeLeech
+          - HDR10
+          - HDR10+
+          - PQ
+          - HLG
+          - HDR (undefined)
+          - UHD (CtrlHD)
+          - UHD (LEGI0N)
+          - UHD (W4NK3R)
+          - UHD (HQMUX)
+          - UHD (WEBDV)
+          - UHD (DON)
+
+        quality_profiles:
+          - name: 4k (Movie Versions + HDR Metadata)
+          - name: Anime 4k (Movie Versions + HDR Metadata)
+          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
+          - name: Remux-4k (Movie Versions + HDR Metadata)
+
+      - names:
+          - Multi
+
+        quality_profiles:
+          - name: 4k (Movie Versions + HDR Metadata)
+            score: -9999
+          - name: Anime 4k (Movie Versions + HDR Metadata)
+            score: -9999
+          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
+            score: -9999
+          - name: Remux-4k (Movie Versions + HDR Metadata)
+            score: -9999
+
+      - names:
+          - TrueHD ATMOS
+          - DTS X
+          - ATMOS (undefined)
+          - DD+ ATMOS
+          - TrueHD
+          - DTS-HD MA
+          - FLAC
+          - PCM
+          - DTS-HD HRA
+          - DD+
+          - DTS-ES
+          - DTS
+          - AAC
+          - DD
+
+        quality_profiles:
+          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
+          - name: Remux-4k (Movie Versions + HDR Metadata)
+
+      - names:
+          - Anime Dual Audio
+
+        quality_profiles:
+          - name: Anime 4k (Movie Versions + HDR Metadata)
+            score: 100
+          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
+            score: 100
+
+      - names:
+          - TrueHD ATMOS
+          - DTS X
+          - ATMOS (undefined)
+          - DD+ ATMOS
+          - TrueHD
+          - DTS-HD MA
+          - FLAC
+          - PCM
+          - DTS-HD HRA
+          - DD+
+          - DTS-ES
+          - DTS
+          - AAC
+          - DD
+          - DV HDR10
+          - DV
+          - DV HLG
+          - DV SDR
+          - HDR10+
+          - HDR10
+          - HDR
+          - HDR (undefined)
+          - PQ
+          - HLG
+          - Hybrid
+          - Remaster
+          - 4K Remaster
+          - Criterion Collection
+          - Special Edition
+          - IMAX
+          - IMAX Enhanced
+          - HQ-WEBDL
+          - HQ-Remux
+          - UHD (CtrlHD)
+          - UHD (DON)
+          - UHD (W4NK3R)
+          - UHD (HQMUX)
+          - UHD (LEGi0N)
+          - UHD (WEBDV)
+          - Repack/Proper
+          - BR-DISK
+          - EVO (no WEBDL)
+          - LQ
+          - x265 (720/1080p)
+          - 3D
+          - No-RlsGroup
+          - Obfuscated
+          - Repack/Proper
+
+        quality_profiles:
+          - name: WEBDL|Remux|Bluray|2160p
+            reset_unmatched_scores: true
+
+      - names:
+          - HQ
+
+        quality_profiles:
+          - name: WEBDL|Remux|Bluray|2160p
+            score: 0
