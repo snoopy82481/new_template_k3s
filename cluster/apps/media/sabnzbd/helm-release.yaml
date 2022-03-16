@@ -22,6 +22,20 @@ spec:
       tag: v3.5.2
     env:
       TZ: "America/Boise"
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+      ui:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          ui:
+            enabled: true
+            port: 8080
+            protocol: TCP
+            targetPort: 8080
     ingress:
       main:
         enabled: true
