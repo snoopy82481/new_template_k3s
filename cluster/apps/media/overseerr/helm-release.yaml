@@ -23,6 +23,20 @@ spec:
     env:
       TZ: "America/Boise"
       LOG_LEVEL: "info"
+    service:
+      main:
+        ports:
+          http:
+            port: 5055
+      ui:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          ui:
+            enabled: true
+            port: 5055
+            protocol: TCP
+            targetPort: 5055
     ingress:
       main:
         enabled: true
