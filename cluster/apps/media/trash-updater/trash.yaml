@@ -1,5 +1,5 @@
 sonarr:
-  - base_url: http://10.43.103.88:8989
+  - base_url: http://10.43.212.233:8989
     api_key: ${SONARR_APIKEY}
 
     quality_definition: series
@@ -10,7 +10,7 @@ sonarr:
         tags:
           - tv
 
-  - base_url: http://10.43.25.35:8989
+  - base_url: http://10.43.75.251:8989
     api_key: ${SONARR_ANIME_APIKEY}
 
     quality_definition: anime
@@ -24,7 +24,7 @@ sonarr:
           - anime
 
 radarr:
-  - base_url: http://10.43.64.0:7878
+  - base_url: http://10.43.2.203:7878
     api_key: ${RADARR_APIKEY}
 
     quality_definition:
@@ -121,7 +121,7 @@ radarr:
           - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
             score: 100
 
-  - base_url: http://10.43.112.75:7878
+  - base_url: http://10.43.24.168:7878
     api_key: ${RADARR_UHD_APIKEY}
 
     quality_definition:
