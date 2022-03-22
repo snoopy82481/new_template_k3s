@@ -4,7 +4,7 @@ metadata:
   name: trash-updater
   namespace: media
 spec:
-  schedule: 0 0 * * *
+  schedule: "0 0 * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 5
@@ -22,10 +22,10 @@ spec:
                 - secretRef:
                     name: arr-apikeys
               command:
-                - /bin/bash
+                - "/bin/bash"
                 - -c
               args:
-                - envsubst < /config/trash.yaml > /shared/trash.yaml
+                - "envsubst < /config/trash.yaml > /shared/trash.yaml"
               volumeMounts:
                 - name: config
                   mountPath: /config
@@ -37,7 +37,7 @@ spec:
               imagePullPolicy: IfNotPresent
               env:
                 - name: TZ
-                  value: ${TZ}
+                  value: "${TZ}"
                 - name: DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
                   value: "1"
               command:
