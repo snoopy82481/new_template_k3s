@@ -254,6 +254,7 @@ radarr:
           - UHD (HQMUX)
           - UHD (LEGi0N)
           - UHD (WEBDV)
+          - UHD (SPHD)
           - Repack/Proper
           - BR-DISK
           - EVO (no WEBDL)
