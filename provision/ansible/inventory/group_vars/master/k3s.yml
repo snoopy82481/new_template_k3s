@@ -49,3 +49,5 @@ k3s_server:
   # Required for HAProxy health-checks
   kube-apiserver-arg:
     - "anonymous-auth=true"
+  node-label:
+    -- "k3s-upgrade=true"
