@@ -9,3 +9,4 @@ resources:
   - rook-ceph.yaml
   - vpn.yaml
   - downloads.yaml
+  - monitoring.yaml
