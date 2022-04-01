@@ -6,3 +6,4 @@ resources:
   - external-dns
   - external-services
   - vpn-gateway
+  - error-pages
