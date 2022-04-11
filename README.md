@@ -36,6 +36,7 @@ Feel free to read up on any of these technologies before you get started to be m
 - [local-path-provisioner](https://github.com/rancher/local-path-provisioner) - default storage class provided by k3s
 - [metallb](https://metallb.universe.tf/) - bare metal load balancer
 - [reloader](https://github.com/stakater/Reloader) - restart pods when Kubernetes `configmap` or `secret` changes
+- [reflector](https://github.com/emberstack/kubernetes-reflector) - mirror `configmap`s or `secret`s to other Kubernetes namespaces
 - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) - upgrade k3s
 - [traefik](https://traefik.io) - ingress controller
 - [error-pages](https://github.com/tarampampam/error-pages) - pretty error pages for HTTP errors
