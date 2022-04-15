@@ -30,7 +30,7 @@ spec:
             enabled: true
             port: 6767
             protocol: TCP
-            targetPort: 7878
+            targetPort: 6767
     ingress:
       main:
         enabled: true
