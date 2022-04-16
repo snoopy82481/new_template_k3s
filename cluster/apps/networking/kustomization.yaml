@@ -7,3 +7,4 @@ resources:
   - external-services
   - vpn-gateway
   - error-pages
+  - k8s-gateway
