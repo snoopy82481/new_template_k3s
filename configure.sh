@@ -36,29 +36,39 @@ main() {
         verify_cloudflare
         success
     else
-        # sops configuration file
+        # generate sops configuration file
         envsubst < "${PROJECT_DIR}/tmpl/.sops.yaml" \
             > "${PROJECT_DIR}/.sops.yaml"
-        # cluster
+        # generate cluster settings
         envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-settings.yaml" \
             > "${PROJECT_DIR}/cluster/base/cluster-settings.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/gotk-sync.yaml" \
             > "${PROJECT_DIR}/cluster/base/flux-system/gotk-sync.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/kube-vip-daemonset.yaml" \
             > "${PROJECT_DIR}/cluster/core/kube-system/kube-vip/daemon-set.yaml"
+        # generate cluster secrets
         envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-secrets.sops.yaml" \
             > "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/cert-manager-secret.sops.yaml" \
             > "${PROJECT_DIR}/cluster/core/cert-manager/secret.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/cluster/cloudflare-ddns-secret.sops.yaml" \
+            > "${PROJECT_DIR}/cluster/apps/networking/cloudflare-ddns/secret.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/cluster/external-dns-secret.sops.yaml" \
+            > "${PROJECT_DIR}/cluster/apps/networking/external-dns/secret.sops.yaml"
+        # encrypt cluster secrets
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/cert-manager/secret.sops.yaml"
-        # terraform
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/cloudflare-ddns/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/external-dns/secret.sops.yaml"
+        # generate terraform secrets
         envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
             > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
+        # encrypt terraform secrets
         sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
-        # ansible
+        # generate ansible settings
         envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
             > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
+        # generate ansible hosts file and secrets
         generate_ansible_hosts
         generate_ansible_host_secrets
     fi
@@ -91,6 +101,16 @@ _has_binary() {
     command -v "${1}" >/dev/null 2>&1 || {
         _log "ERROR" "${1} is not installed or not found in \$PATH"
         exit 1
+    }
+}
+
+_has_optional_envar() {
+    local option="${1}"
+    # shellcheck disable=SC2015
+    [[ "${!option}" == "" ]] && {
+        _log "WARN" "Unset optional variable ${option}"
+    } || {
+        _log "INFO" "Found variable '${option}' with value '${!option}'"
     }
 }
 
@@ -160,13 +180,16 @@ verify_metallb() {
     local ip_floor=
     local ip_ceil=
     _has_envar "BOOTSTRAP_METALLB_LB_RANGE"
+    _has_envar "BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR"
     _has_envar "BOOTSTRAP_METALLB_TRAEFIK_ADDR"
 
     ip_floor=$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f1)
     ip_ceil=$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f2)
 
+    # TODO(configure.sh): More checks on valid IP addressing
     _has_valid_ip "${ip_floor}" "BOOTSTRAP_METALLB_LB_RANGE"
     _has_valid_ip "${ip_ceil}" "BOOTSTRAP_METALLB_LB_RANGE"
+    _has_valid_ip "${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}" "BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR"
     _has_valid_ip "${BOOTSTRAP_METALLB_TRAEFIK_ADDR}" "BOOTSTRAP_METALLB_TRAEFIK_ADDR"
 }
 
@@ -213,6 +236,14 @@ verify_ansible_hosts() {
     local node_username=
     local node_password=
     local node_control=
+    local node_hostname=
+    local default_control_node_prefix=
+    local default_worker_node_prefix=
+
+    default_control_node_prefix="BOOTSTRAP_ANSIBLE_DEFAULT_CONTROL_NODE_HOSTNAME_PREFIX"
+    default_worker_node_prefix="BOOTSTRAP_ANSIBLE_DEFAULT_NODE_HOSTNAME_PREFIX"
+    _has_optional_envar "${default_control_node_prefix}"
+    _has_optional_envar "${default_worker_node_prefix}"
 
     for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
         node_id=$(echo "${var}" | awk -F"_" '{print $5}')
@@ -220,11 +251,12 @@ verify_ansible_hosts() {
         node_username="BOOTSTRAP_ANSIBLE_SSH_USERNAME_${node_id}"
         node_password="BOOTSTRAP_ANSIBLE_SUDO_PASSWORD_${node_id}"
         node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
-
+        node_hostname="BOOTSTRAP_ANSIBLE_HOSTNAME_${node_id}"
         _has_envar "${node_addr}"
         _has_envar "${node_username}"
         _has_envar "${node_password}"
         _has_envar "${node_control}"
+        _has_optional_envar "${node_hostname}"
 
         if ssh -q -o BatchMode=yes -o ConnectTimeout=5 "${!node_username}"@"${!var}" "true"; then
             _log "INFO" "Successfully SSH'ed into host '${!var}' with username '${!node_username}'"
@@ -244,33 +276,64 @@ generate_ansible_host_secrets() {
     local node_id=
     local node_username=
     local node_password=
+    local node_hostname=
+    default_control_node_prefix=${BOOTSTRAP_ANSIBLE_DEFAULT_CONTROL_NODE_HOSTNAME_PREFIX:-k8s-}
+    default_worker_node_prefix=${BOOTSTRAP_ANSIBLE_DEFAULT_NODE_HOSTNAME_PREFIX:-k8s-}
     for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
         node_id=$(echo "${var}" | awk -F"_" '{print $5}')
+        if [[ "${!node_control}" == "true" ]]; then
+            node_hostname="BOOTSTRAP_ANSIBLE_HOSTNAME_${node_id}"
+            host_key="${!node_hostname:-${default_control_node_prefix}}"
+            if [ "${host_key}" == "${default_control_node_prefix}" ]; then
+                node_hostname=${default_control_node_prefix}${node_id}
+            else
+                node_hostname=${!node_hostname}
+            fi
+        else
+            node_hostname="BOOTSTRAP_ANSIBLE_HOSTNAME_${node_id}"
+            host_key="${!node_hostname:-${default_worker_node_prefix}}"
+            if [ "${host_key}" == "${default_worker_node_prefix}" ]; then
+                node_hostname=${default_worker_node_prefix}${node_id}
+            else
+                node_hostname=${!node_hostname}
+            fi
+        fi
         {
             node_username="BOOTSTRAP_ANSIBLE_SSH_USERNAME_${node_id}"
             node_password="BOOTSTRAP_ANSIBLE_SUDO_PASSWORD_${node_id}"
             printf "kind: Secret\n"
             printf "ansible_user: %s\n" "${!node_username}"
             printf "ansible_become_pass: %s\n" "${!node_password}"
-        } > "${PROJECT_DIR}/provision/ansible/inventory/host_vars/k8s-${node_id}.sops.yml"
-        sops --encrypt --in-place "${PROJECT_DIR}/provision/ansible/inventory/host_vars/k8s-${node_id}.sops.yml"
+        } > "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${node_hostname}.sops.yml"
+        sops --encrypt --in-place "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${node_hostname}.sops.yml"
     done
 }
 
 generate_ansible_hosts() {
     local worker_node_count=
+    default_control_node_prefix=${BOOTSTRAP_ANSIBLE_DEFAULT_CONTROL_NODE_HOSTNAME_PREFIX:-k8s-}
+    default_worker_node_prefix=${BOOTSTRAP_ANSIBLE_DEFAULT_NODE_HOSTNAME_PREFIX:-k8s-}
     {
         printf -- "---\n"
         printf "kubernetes:\n"
         printf "  children:\n"
         printf "    master:\n"
         printf "      hosts:\n"
+        master_node_count=0
         worker_node_count=0
         for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
             node_id=$(echo "${var}" | awk -F"_" '{print $5}')
             node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
             if [[ "${!node_control}" == "true" ]]; then
-                printf "        k8s-%s:\n" "${node_id}"
+                master_node_count=$((master_node_count+1))
+                node_hostname="BOOTSTRAP_ANSIBLE_HOSTNAME_${node_id}"
+                host_key="${!node_hostname:-${default_control_node_prefix}}"
+                if [ "${host_key}" == "${default_control_node_prefix}" ]; then
+                    node_hostname=${default_control_node_prefix}${node_id}
+                else
+                    node_hostname=${!node_hostname}
+                fi
+                printf "        %s:\n" "${node_hostname}"
                 printf "          ansible_host: %s\n" "${!var}"
             else
                 worker_node_count=$((worker_node_count+1))
@@ -283,7 +346,14 @@ generate_ansible_hosts() {
                 node_id=$(echo "${var}" | awk -F"_" '{print $5}')
                 node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
                 if [[ "${!node_control}" == "false" ]]; then
-                    printf "        k8s-%s:\n" "${node_id}"
+                    node_hostname="BOOTSTRAP_ANSIBLE_HOSTNAME_${node_id}"
+                    host_key="${!node_hostname:-${default_worker_node_prefix}}"
+                    if [ "${host_key}" == "${default_worker_node_prefix}" ]; then
+                        node_hostname=${default_worker_node_prefix}${node_id}
+                    else
+                        node_hostname=${!node_hostname}
+                    fi
+                    printf "        %s:\n" "${node_hostname}"
                     printf "          ansible_host: %s\n" "${!var}"
                 fi
             done
