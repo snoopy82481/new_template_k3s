@@ -37,15 +37,15 @@ spec:
         ports:
           http:
             port: 8080
-      ui:
-        enabled: true
-        type: LoadBalancer
-        ports:
-          ui:
-            enabled: true
-            port: 8080
-            protocol: TCP
-            targetPort: 8080
+      # ui:
+      #   enabled: true
+      #   type: LoadBalancer
+      #   ports:
+      #     ui:
+      #       enabled: true
+      #       port: 8080
+      #       protocol: TCP
+      #       targetPort: 8080
       bittorrent:
         enabled: true
         type: LoadBalancer

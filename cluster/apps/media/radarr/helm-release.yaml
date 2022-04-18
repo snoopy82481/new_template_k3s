@@ -27,15 +27,15 @@ spec:
         ports:
           http:
             port: 7878
-      ui:
-        enabled: true
-        type: LoadBalancer
-        ports:
-          ui:
-            enabled: true
-            port: 7878
-            protocol: TCP
-            targetPort: 7878
+      # ui:
+      #   enabled: true
+      #   type: LoadBalancer
+      #   ports:
+      #     ui:
+      #       enabled: true
+      #       port: 7878
+      #       protocol: TCP
+      #       targetPort: 7878
     ingress:
       main:
         enabled: true

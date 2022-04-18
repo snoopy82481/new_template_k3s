@@ -29,15 +29,15 @@ spec:
         ports:
           http:
             port: 80
-      ui:
-        enabled: true
-        type: LoadBalancer
-        ports:
-          ui:
-            enabled: true
-            port: 80
-            protocol: TCP
-            targetPort: 80
+      # ui:
+      #   enabled: true
+      #   type: LoadBalancer
+      #   ports:
+      #     ui:
+      #       enabled: true
+      #       port: 80
+      #       protocol: TCP
+      #       targetPort: 80
     ingress:
       main:
         enabled: true
