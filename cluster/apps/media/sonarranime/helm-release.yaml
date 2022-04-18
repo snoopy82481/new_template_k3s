@@ -23,19 +23,19 @@ spec:
     env:
       TZ: "America/Boise"
     service:
-      main:
-        ports:
-          http:
-            port: 8989
-      # ui:
-      #   enabled: true
-      #   type: LoadBalancer
+      # main:
       #   ports:
-      #     ui:
-      #       enabled: true
+      #     http:
       #       port: 8989
-      #       protocol: TCP
-      #       targetPort: 8989
+      main:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          main:
+            enabled: true
+            port: 8989
+            protocol: TCP
+            targetPort: 8989
     ingress:
       main:
         enabled: true

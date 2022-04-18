@@ -23,18 +23,18 @@ spec:
     env:
       TZ: ${TZ}
     service:
-      main:
-        ports:
-          http:
-            port: 6767
       # main:
-      #   type: LoadBalancer
       #   ports:
       #     http:
-      #       enabled: true
       #       port: 6767
-      #       protocol: TCP
-      #       targetPort: 6767
+      main:
+        type: LoadBalancer
+        ports:
+          http:
+            enabled: true
+            port: 6767
+            protocol: TCP
+            targetPort: 6767
     ingress:
       main:
         enabled: true

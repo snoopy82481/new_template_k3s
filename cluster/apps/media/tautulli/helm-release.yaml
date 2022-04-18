@@ -23,19 +23,19 @@ spec:
     env:
       TZ: "America/Boise"
     service:
-      main:
-        ports:
-          http:
-            port: 8181
-      # ui:
-      #   enabled: true
-      #   type: LoadBalancer
+      # main:
       #   ports:
-      #     ui:
-      #       enabled: true
+      #     http:
       #       port: 8181
-      #       protocol: TCP
-      #       targetPort: 8181
+      main:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          main:
+            enabled: true
+            port: 8181
+            protocol: TCP
+            targetPort: 8181
     ingress:
       main:
         enabled: true
