@@ -30,6 +30,7 @@ spec:
       enabled: false
     ingress:
       dashboard:
+        ingressClassName: "traefik"
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         host:
