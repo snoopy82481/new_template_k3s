@@ -74,6 +74,14 @@ spec:
             server: "truenas.${SECRET_DOMAIN}"
             path: /mnt/storage0/Data
         mountPath: /media
+      backup:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "truenas.${SECRET_DOMAIN}"
+            path: /mnt/storage0/backup
+        mountPath: /backup
     resources:
       requests:
         memory: 250Mi

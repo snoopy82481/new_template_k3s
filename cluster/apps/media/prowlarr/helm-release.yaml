@@ -69,6 +69,14 @@ spec:
         enabled: true
         existingClaim: prowlarr-config-v1
         mountPath: /config
+      backup:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "truenas.${SECRET_DOMAIN}"
+            path: /mnt/storage0/backup
+        mountPath: /backup
     resources:
       requests:
         memory: 250Mi
