@@ -1,20 +1,24 @@
 ---
-- import_tasks: locale.yml
+- include: locale.yml
   tags:
     - locale
 
-- import_tasks: packages.yml
+- include: packages.yml
   tags:
     - packages
 
-- import_tasks: network.yml
+- import_tasks: kernel.yml
+  tags:
+    - kernel
+
+- include: network.yml
   tags:
     - network
 
-- import_tasks: filesystem.yml
+- include: filesystem.yml
   tags:
     - filesystem
 
-- import_tasks: user.yml
+- include: user.yml
   tags:
     - user
