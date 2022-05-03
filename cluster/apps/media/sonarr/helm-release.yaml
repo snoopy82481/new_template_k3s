@@ -48,6 +48,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "television-box"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
