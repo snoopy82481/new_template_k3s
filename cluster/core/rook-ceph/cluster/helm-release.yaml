@@ -53,6 +53,7 @@ spec:
         enabled: false
         urlPrefix: /
         ssl: false
+      skipUpgradeChecks: true
       storage:
         useAllNodes: false
         useAllDevices: false
