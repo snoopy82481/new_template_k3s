@@ -28,21 +28,12 @@ spec:
       repository: ghcr.io/k8s-at-home/tautulli
       tag: v2.9.7
     env:
-      TZ: "America/Boise"
+      TZ: ${TZ}
     service:
-      # main:
-      #   ports:
-      #     http:
-      #       port: 8181
       main:
-        enabled: true
-        type: LoadBalancer
         ports:
-          main:
-            enabled: true
+          http:
             port: 8181
-            protocol: TCP
-            targetPort: 8181
     ingress:
       main:
         enabled: true
@@ -62,6 +53,7 @@ spec:
         tls:
           - hosts:
               - "tautulli.${SECRET_DOMAIN}"
+            secretName: tautulli-tls
     persistence:
       config:
         enabled: true

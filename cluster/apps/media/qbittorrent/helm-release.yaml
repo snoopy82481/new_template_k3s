@@ -37,22 +37,13 @@ spec:
     settings:
       automaticPortSetup: false
     env:
-      TZ: "America/Boise"
+      TZ: ${TZ}
       UMASK: "022"
     service:
-      # main:
-      #   ports:
-      #     http:
-      #       port: 8080
       main:
-        enabled: true
-        type: LoadBalancer
         ports:
-          main:
-            enabled: true
+          http:
             port: 8080
-            protocol: TCP
-            targetPort: 8080
       bittorrent:
         enabled: true
         type: LoadBalancer

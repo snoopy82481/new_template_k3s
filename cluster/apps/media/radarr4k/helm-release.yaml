@@ -28,26 +28,18 @@ spec:
       repository: ghcr.io/k8s-at-home/radarr
       tag: v4.1.0.6175
     env:
-      TZ: "America/Boise"
+      TZ: ${TZ}
     service:
-      # main:
-      #   ports:
-      #     http:
-      #       port: 7878
       main:
-        enabled: true
-        type: LoadBalancer
         ports:
-          main:
-            enabled: true
+          http:
             port: 7878
-            protocol: TCP
-            targetPort: 7878
     ingress:
       main:
         enabled: true
         ingressClassName: "traefik"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "filmstrip"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

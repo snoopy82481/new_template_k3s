@@ -28,7 +28,7 @@ spec:
       repository: organizr/organizr
       tag: latest
     env:
-      TZ: "America/Boise"
+      TZ: ${TZ}
       PUID: 1001
       PGID: 1001
     service:

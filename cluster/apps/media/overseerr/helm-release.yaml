@@ -28,22 +28,13 @@ spec:
       repository: ghcr.io/sct/overseerr
       tag: 1.29.1
     env:
-      TZ: "America/Boise"
+      TZ: ${TZ}
       LOG_LEVEL: "info"
     service:
-      # main:
-      #   ports:
-      #     http:
-      #       port: 5055
       main:
-        enabled: true
-        type: LoadBalancer
         ports:
-          main:
-            enabled: true
+          http:
             port: 5055
-            protocol: TCP
-            targetPort: 5055
     ingress:
       main:
         enabled: true

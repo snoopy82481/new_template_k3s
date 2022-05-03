@@ -29,24 +29,15 @@ spec:
       tag: nightly
       pullPolicy: Always
     env:
-      TZ: "America/Boise"
+      TZ: ${TZ}
       PUID: 1001
       GUID: 1001
       UMASK: 002
     service:
-      # main:
-      #   ports:
-      #     http:
-      #       port: 9696
       main:
-        enabled: true
-        type: LoadBalancer
         ports:
-          main:
-            enabled: true
+          http:
             port: 9696
-            protocol: TCP
-            targetPort: 9696
     ingress:
       main:
         enabled: true
@@ -64,6 +55,7 @@ spec:
         tls:
           - hosts:
               - "prowlarr.${SECRET_DOMAIN}"
+            secretName: prowlarr-tls
     persistence:
       config:
         enabled: true

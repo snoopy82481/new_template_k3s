@@ -33,6 +33,27 @@ spec:
       TX: ${TZ}
       TEMPLATE_NAME: l7-dark
       SHOW_DETAILS: "false"
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hosts:
+          - host: "error-pages.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "error-pages.${SECRET_DOMAIN}"
+            secretName: error-pages-tls
     resources:
       requests:
         memory: 100Mi

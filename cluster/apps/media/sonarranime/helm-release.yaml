@@ -28,26 +28,18 @@ spec:
       repository: ghcr.io/k8s-at-home/sonarr
       tag: v3.0.8.1507
     env:
-      TZ: "America/Boise"
+      TZ: ${TZ}
     service:
-      # main:
-      #   ports:
-      #     http:
-      #       port: 8989
       main:
-        enabled: true
-        type: LoadBalancer
         ports:
-          main:
-            enabled: true
+          http:
             port: 8989
-            protocol: TCP
-            targetPort: 8989
     ingress:
       main:
         enabled: true
         ingressClassName: "traefik"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "television-box"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
