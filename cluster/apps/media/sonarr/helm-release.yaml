@@ -29,11 +29,11 @@ spec:
       tag: v3.0.8.1507
     env:
       TZ: ${TZ}
-    # service:
-    #   main:
-    #     ports:
-    #       http:
-    #         port: 8989
+    service:
+      main:
+        ports:
+          http:
+            port: 8989
     ingress:
       main:
         enabled: true
