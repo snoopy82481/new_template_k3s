@@ -23,7 +23,7 @@ spec:
     remediation:
       retries: 5
   dependsOn:
-    - name: rook-ceph
+    - name: rook-ceph-operator
       namespace: rook-ceph
   values:
     monitoring:
@@ -35,11 +35,11 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         host:
-          name: "rook.${SECRET_DOMAIN}"
+          name: &host "rook.${SECRET_DOMAIN}"
           path: "/"
         tls:
           - hosts:
-              - "rook.${SECRET_DOMAIN}"
+              - *host
             secretName: rook-tls
     configOverride: |
       [global]
@@ -48,6 +48,11 @@ spec:
     cephClusterSpec:
       cephVersion:
         image: quay.io/ceph/ceph:v17.2.0
+      network:
+        provider: host
+      connections:
+        compression:
+          enabled: true
       crashCollector:
         disable: false
       dashboard:

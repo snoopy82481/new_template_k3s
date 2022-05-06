@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rook-direct-mount
-  namespace: rook-ceph # namespace:cluster
+  namespace: rook-ceph
   labels:
     app: rook-direct-mount
 spec:
@@ -49,7 +49,6 @@ spec:
               mountPath: /etc/rook
             - name: nas-data
               mountPath: /mnt/nas-data
-      # if hostNetwork: false, the "rbd map" command hangs, see https://github.com/rook/rook/issues/2021
       hostNetwork: true
       volumes:
         - name: dev
