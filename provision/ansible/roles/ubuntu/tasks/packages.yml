@@ -38,7 +38,8 @@
       - unzip
       - qemu-guest-agent
       - zsh
-      - powerline fonts-powerline
+      - powerline
+      - fonts-powerline
     install_recommends: false
     update_cache: true
     cache_valid_time: 3600
