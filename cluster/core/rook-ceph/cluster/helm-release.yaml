@@ -25,6 +25,8 @@ spec:
   dependsOn:
     - name: rook-ceph-operator
       namespace: rook-ceph
+  topologySpreadConstraints:
+    whenUnsatisfiable: ScheduleAnyway
   values:
     monitoring:
       enabled: false
@@ -50,6 +52,9 @@ spec:
         image: quay.io/ceph/ceph:v17.2.0
       network:
         provider: host
+        connections:
+          compression:
+            enabled: true
       crashCollector:
         disable: false
       dashboard:
