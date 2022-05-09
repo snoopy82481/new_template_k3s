@@ -25,8 +25,6 @@ spec:
   dependsOn:
     - name: rook-ceph-operator
       namespace: rook-ceph
-  topologySpreadConstraints:
-    whenUnsatisfiable: ScheduleAnyway
   values:
     monitoring:
       enabled: false
