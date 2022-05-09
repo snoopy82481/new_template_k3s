@@ -38,6 +38,7 @@
       - unzip
       - qemu-guest-agent
       - zsh
+      - powerline fonts-powerline
     install_recommends: false
     update_cache: true
     cache_valid_time: 3600
@@ -84,3 +85,6 @@
     daemon_reload: true
     enabled: true
     state: restarted
+
+- name: Install zsh
+  ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
