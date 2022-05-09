@@ -39,7 +39,7 @@ Feel free to read up on any of these technologies before you get started to be m
 - [local-path-provisioner](https://github.com/rancher/local-path-provisioner) - default storage class provided by k3s
 - [metallb](https://metallb.universe.tf/) - bare metal load balancer
 - [reloader](https://github.com/stakater/Reloader) - restart pods when Kubernetes `configmap` or `secret` changes
-- [reflector](https://github.com/emberstack/kubernetes-reflector) - mirror `configmap(s)` or `secret(s)` to other Kubernetes namespaces
+- [reflector](https://github.com/emberstack/kubernetes-reflector) - mirror `configmap`s or `secret`s to other Kubernetes namespaces
 - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) - (opt-in) automate upgrading k3s
 - [traefik](https://traefik.io) - ingress controller
 
@@ -47,7 +47,7 @@ For provisioning the following tools will be used:
 
 - [Ubuntu](https://ubuntu.com/download/server) - this is a pretty universal operating system that supports running all kinds of home related workloads in Kubernetes
 - [Ansible](https://www.ansible.com) - this will be used to provision the Ubuntu operating system to be ready for Kubernetes and also to install k3s
-- [Terraform](https://www.terraform.io) - in order to help with the DNS settings this will be used to provision an already existing Cloudflare domain and DNS settings
+- [Terraform](https://www.terraform.io) - in order to help with the DNS settings this will be used to provision an already existing Cloudflare domain and certain DNS settings
 
 ## 📝 Prerequisites
 
@@ -104,20 +104,10 @@ After pre-commit is installed on your machine run:
 task pre-commit:init
 ```
 
-**Remember to run this on each new clone of the repository for it to have effect.**
-
-Commands are of interest, for learning purposes:
-
-This command makes it so pre-commit runs on `git commit`, and also installs environments per the config file.
-
-```sh
-pre-commit install --install-hooks
-```
-
 This command checks for new versions of hooks, though it will occasionally make mistakes, so verify its results.
 
 ```sh
-pre-commit autoupdate
+task pre-commit:update
 ```
 
 ## 📂 Repository structure
@@ -199,43 +189,91 @@ In order to use Terraform and `cert-manager` with the Cloudflare DNS challenge y
 
 📍 The `.config.env` file contains necessary configuration that is needed by Ansible, Terraform and Flux.
 
-1. Copy the `.config.sample.env` to `.config.env` and start filling out all the environment variables. **All are required** unless otherwise noted in the comments.
+1. Copy the `.config.sample.env` to `.config.env` and start filling out all the environment variables.
 
-2. Once that is done, verify the configuration is correct by running `./configure.sh --verify`
+    **All are required** unless otherwise noted in the comments.
 
-3. If you do not encounter any errors run `./configure.sh` to start having the script wire up the templated files and place them where they need to be.
+    ```sh
+    cp .config.sample.env .config.env
+    ```
+
+2. Once that is done, verify the configuration is correct by running:
+
+    ```sh
+    task verify
+    ```
+
+3. If you do not encounter any errors run start having the script wire up the templated files and place them where they need to be.
+
+    ```sh
+    task configure
+    ```
 
 ### ⚡ Preparing Ubuntu with Ansible
 
 📍 Here we will be running a Ansible Playbook to prepare Ubuntu for running a Kubernetes cluster.
 
-📍 Nodes are not security hardened by default, you can do this with [dev-sec/ansible-collection-hardening](https://github.com/dev-sec/ansible-collection-hardening) or something similar.
+📍 Nodes are not security hardened by default, you can do this with [dev-sec/ansible-collection-hardening](https://github.com/dev-sec/ansible-collection-hardening) or similar if it supports Ubuntu 22.04.
 
-1. Ensure you are able to SSH into your nodes from your workstation using your private ssh key. This is how Ansible is able to connect to your remote nodes. [How to configure SSH key-based authentication](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server)
+1. Ensure you are able to SSH into your nodes from your workstation using your private ssh key. This is how Ansible is able to connect to your remote nodes.
 
-2. Install the deps by running `task ansible:deps`
+   [How to configure SSH key-based authentication](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server)
 
-3. Verify Ansible can view your config by running `task ansible:list`
+2. Install the Ansible deps
 
-4. Verify Ansible can ping your nodes by running `task ansible:adhoc:ping`
+    ```sh
+    task ansible:init
+    ```
 
-5. Finally, run the Ubuntu Prepare playbook by running `task ansible:playbook:ubuntu-prepare`
+3. Verify Ansible can view your config
 
-6. If everything goes as planned you should see Ansible running the Ubuntu Prepare Playbook against your nodes.
+    ```sh
+    task ansible:list
+    ```
+
+4. Verify Ansible can ping your nodes
+
+    ```sh
+    task ansible:ping
+    ```
+
+5. Run the Ubuntu Prepare Ansible playbook
+
+    ```sh
+    task ansible:prepare
+    ```
+
+6. Reboot the nodes
+
+    ```sh
+    task ansible:reboot
+    ```
 
 ### ⛵ Installing k3s with Ansible
 
 📍 Here we will be running a Ansible Playbook to install [k3s](https://k3s.io/) with [this](https://galaxy.ansible.com/xanmanning/k3s) wonderful k3s Ansible galaxy role. After completion, Ansible will drop a `kubeconfig` in `./provision/kubeconfig` for use with interacting with your cluster with `kubectl`.
 
-1. Verify Ansible can view your config by running `task ansible:list`
+☢️ If you run into problems, you can run `task ansible:nuke` to destroy the k3s cluster and start over.
 
-2. Verify Ansible can ping your nodes by running `task ansible:adhoc:ping`
+1. Verify Ansible can view your config
 
-3. Run the k3s install playbook by running `task ansible:playbook:k3s-install`
+    ```sh
+    task ansible:list
+    ```
 
-4. If everything goes as planned you should see Ansible running the k3s install Playbook against your nodes.
+2. Verify Ansible can ping your nodes
 
-5. Verify the nodes are online
+    ```sh
+    task ansible:ping
+    ```
+
+3. Install k3s with Ansible
+
+    ```sh
+    task ansible:install
+    ```
+
+4. Verify the nodes are online
 
     ```sh
     kubectl --kubeconfig=./provision/kubeconfig get nodes
@@ -246,15 +284,31 @@ In order to use Terraform and `cert-manager` with the Cloudflare DNS challenge y
 
 ### ☁️ Configuring Cloudflare DNS with Terraform
 
-📍 Review the Terraform scripts under `./provision/terraform/cloudflare/` and make sure you understand what it's doing (no really review it). If your domain already has existing DNS records **be sure to export those DNS settings before you continue**.
+📍 Review the Terraform scripts under `./provision/terraform/cloudflare/` and make sure you understand what it's doing (no really review it).
 
-1. Pull in the Terraform deps by running `task terraform:init:cloudflare`
+If your domain already has existing DNS records **be sure to export those DNS settings before you continue**.
 
-2. Review the changes Terraform will make to your Cloudflare domain by running `task terraform:plan:cloudflare`
+1. Pull in the Terraform deps
 
-3. Finally have Terraform execute the task by running `task terraform:apply:cloudflare`
+    ```sh
+    task terraform:init
+    ```
 
-If Terraform was ran successfully you can log into Cloudflare and validate the DNS records are present. The cluster application `external-dns` will be managing the rest of the DNS records you will need.
+2. Review the changes Terraform will make to your Cloudflare domain
+
+    ```sh
+    task terraform:plan
+    ```
+
+3. Have Terraform apply your Cloudflare settings
+
+    ```sh
+    task terraform:apply
+    ```
+
+If Terraform was ran successfully you can log into Cloudflare and validate the DNS records are present.
+
+The cluster application [external-dns](https://github.com/kubernetes-sigs/external-dns) will be managing the rest of the DNS records you will need.
 
 ### 🔹 GitOps with Flux
 
@@ -285,13 +339,11 @@ If Terraform was ran successfully you can log into Cloudflare and validate the D
         --from-file=age.agekey=/dev/stdin
     ```
 
-    📍 Variables defined in `./cluster/base/cluster-secrets.sops.yaml` and `./cluster/base/cluster-settings.yaml` will be usable anywhere in your YAML manifests under `./cluster`
+    📍 Variables defined in `./cluster/base/cluster-secrets.sops.yaml` and `./cluster/base/cluster-settings.yaml` will be usable anywhere in your YAML manifests under `./cluster` except `./cluster/base`
 
 4. **Verify** the `./cluster/base/cluster-secrets.sops.yaml` and `./cluster/core/cert-manager/secret.sops.yaml` files are **encrypted** with SOPS
 
-5. If you verified all the secrets are encrypted, you can delete the `tmpl` directory now
-
-6. Push you changes to git
+5. Push you changes to git
 
     ```sh
     git add -A
@@ -299,7 +351,7 @@ If Terraform was ran successfully you can log into Cloudflare and validate the D
     git push
     ```
 
-7. Install Flux
+6. Install Flux
 
     📍 Due to race conditions with the Flux CRDs you will have to run the below command twice. There should be no errors on this second run.
 
@@ -308,15 +360,10 @@ If Terraform was ran successfully you can log into Cloudflare and validate the D
     # namespace/flux-system configured
     # customresourcedefinition.apiextensions.k8s.io/alerts.notification.toolkit.fluxcd.io created
     # ...
-    # unable to recognize "./cluster/base/flux-system": no matches for kind "Kustomization" in version "kustomize.toolkit.fluxcd.io/v1beta1"
-    # unable to recognize "./cluster/base/flux-system": no matches for kind "GitRepository" in version "source.toolkit.fluxcd.io/v1beta1"
-    # unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
-    # unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
-    # unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
     # unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
     ```
 
-8. Verify Flux components are running in the cluster
+7. Verify Flux components are running in the cluster
 
     ```sh
     kubectl --kubeconfig=./provision/kubeconfig get pods -n flux-system
@@ -327,32 +374,76 @@ If Terraform was ran successfully you can log into Cloudflare and validate the D
     # source-controller-7d6875bcb4-zqw9f         1/1     Running   0          1h
     ```
 
-🎉 **Congratulations** if all goes smooth you'll have a Kubernetes cluster managed by Flux, your Git repository is driving the state of your cluster.
+### 🎤 Verification Steps
 
-Now it's time to pause and go get some coffee ☕ because next is describing how DNS is handled. 🧠
+_Mic check, 1, 2_ - In a few moments applications should be spinning up in your cluster, give it a few minutes for everything to light up like a Christmas tree 🎄
+
+1. View the Flux kustomizations
+
+    ```sh
+    kubectl --kubeconfig=./provision/kubeconfig get kustomizations --all-namespaces
+    ```
+
+2. View all the Flux Helm Releases
+
+    ```sh
+    kubectl --kubeconfig=./provision/kubeconfig get helmreleases --all-namespaces
+    ```
+
+3. View all the Flux Helm Repositories
+
+    ```sh
+    kubectl --kubeconfig=./provision/kubeconfig get helmrepositories --all-namespaces
+    ```
+
+4. View all the Pods
+
+    ```sh
+    kubectl --kubeconfig=./provision/kubeconfig get pods --all-namespaces
+    ```
+
+5. View all the certificates and certificate requests
+
+    ```sh
+    kubectl --kubeconfig=./provision/kubeconfig get certificates --all-namespaces
+    kubectl --kubeconfig=./provision/kubeconfig get certificaterequests --all-namespaces
+    ```
+
+🏆 **Congratulations** if all goes smooth you'll have a Kubernetes cluster managed by Flux, your Git repository is driving the state of your cluster.
+
+☢️ If you run into problems, you can run `task ansible:nuke` to destroy the k3s cluster and start over.
+
+🧠 Now it's time to pause and go get some coffee ☕ because next is describing how DNS is handled.
 
 ## 📣 Post installation
 
 ### 🌐 DNS
 
-📍 The `external-dns` application created in the `networking` namespace will handle creating public DNS records. By default, `echo-server` is the only public domain exposed on your Cloudflare domain. In order to make additional applications public you must set an ingress annotation like in the `HelmRelease` for `echo-server`. You do not need to use Terraform to create additional DNS records unless you need a record outside the purposes of your Kubernetes cluster (e.g. setting up MX records).
+📍 The [external-dns](https://github.com/kubernetes-sigs/external-dns) application created in the `networking` namespace will handle creating public DNS records. By default, `echo-server` is the only public domain exposed on your Cloudflare domain. In order to make additional applications public you must set an ingress annotation like in the `HelmRelease` for `echo-server`. You do not need to use Terraform to create additional DNS records unless you need a record outside the purposes of your Kubernetes cluster (e.g. setting up MX records).
 
-`k8s_gateway` is deployed on the IP choosen for `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}`. Inorder to test DNS you can point your clients DNS to the `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}` IP address and load `https://hajimari.${BOOTSTRAP_CLOUDFLARE_DOMAIN}` in your browser.
+[k8s_gateway](https://github.com/ori-edge/k8s_gateway) is deployed on the IP choosen for `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}`. Inorder to test DNS you can point your clients DNS to the `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}` IP address and load `https://hajimari.${BOOTSTRAP_CLOUDFLARE_DOMAIN}` in your browser.
 
 You can also try debugging with the command `dig`, e.g. `dig @${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR} hajimari.${BOOTSTRAP_CLOUDFLARE_DOMAIN}` and you should get a valid answer containing your `${BOOTSTRAP_METALLB_TRAEFIK_ADDR}` IP address.
 
-If your router (or Pi-Hole, Adguard Home or whatever) supports conditional DNS forwarding (also know as split-horizon DNS) you may have DNS requests for `${SECRET_DOMAIN}` only point to the  `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}` IP address. This will ensure only DNS requests for `${SECRET_DOMAIN}` will only get routed to your `k8s_gateway` service thus providing DNS resolution to your cluster applications/ingresses.
+If your router (or Pi-Hole, Adguard Home or whatever) supports conditional DNS forwarding (also know as split-horizon DNS) you may have DNS requests for `${SECRET_DOMAIN}` only point to the  `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}` IP address. This will ensure only DNS requests for `${SECRET_DOMAIN}` will only get routed to your [k8s_gateway](https://github.com/ori-edge/k8s_gateway) service thus providing DNS resolution to your cluster applications/ingresses.
 
 To access services from the outside world port forwarded `80` and `443` in your router to the `${BOOTSTRAP_METALLB_TRAEFIK_ADDR}` IP, in a few moments head over to your browser and you _should_ be able to access `https://echo-server.${BOOTSTRAP_CLOUDFLARE_DOMAIN}` from a device outside your LAN.
 
 Now if nothing is working, that is expected. This is DNS after all!
 
+### 🤖 Renovatebot
+
+[Renovatebot](https://www.whitesourcesoftware.com/free-developer-tools/renovate/) will scan your repository and offer PRs when it finds dependencies out of date. Common dependencies it will discover and update are Flux, Ansible Galaxy Roles, Terraform Providers, Kubernetes Helm Charts, Kubernetes Container Images, Pre-commit hooks updates, and more!
+
+The base Renovate configuration provided in your repository can be view at [.github/renovate.json5](https://github.com/k8s-at-home/template-cluster-k3s/blob/main/.github/renovate.json5). If you notice this only runs on weekends and you can [change the schedule to anything you want](https://docs.renovatebot.com/presets-schedule/) or simply remove it.
+
+To enable Renovate on your repository, click the 'Configure' button over at their [Github app page](https://github.com/apps/renovate) and choose your repository. Over time Renovate will create PRs for out-of-date dependencies it finds. Any merged PRs that are in the cluster directory Flux will deploy.
+
 ### 🪝 Github Webhook
 
 Flux is pull-based by design meaning it will periodically check your git repository for changes, using a webhook you can enable Flux to update your cluster on `git push`. In order to configure Github to send `push` events from your repository to the Flux webhook receiver you will need two things:
 
-1. Webhook URL
-    Your webhook receiver will be deployed on `https://flux-receiver.${BOOTSTRAP_CLOUDFLARE_DOMAIN}/hook/:hookId`. In order to find out your hook id you can run the following command:
+1. Webhook URL - Your webhook receiver will be deployed on `https://flux-receiver.${BOOTSTRAP_CLOUDFLARE_DOMAIN}/hook/:hookId`. In order to find out your hook id you can run the following command:
 
     ```sh
     kubectl -n flux-system get receiver/github-receiver --kubeconfig=./provision/kubeconfig
@@ -366,8 +457,7 @@ Flux is pull-based by design meaning it will periodically check your git reposit
     https://flux-receiver.k8s-at-home.com/hook/12ebd1e363c641dc3c2e430ecf3cee2b3c7a5ac9e1234506f6f5f3ce1230e123
     ```
 
-2. Webhook secret
-    Your webhook secret can be found by decrypting the `secret.sops.yaml` using the following command:
+2. Webhook secret - Your webhook secret can be found by decrypting the `secret.sops.yaml` using the following command:
 
     ```sh
     sops -d ./cluster/apps/flux-system/webhooks/github/secret.sops.yaml | yq .stringData.token
@@ -377,7 +467,19 @@ Flux is pull-based by design meaning it will periodically check your git reposit
 
 Now that you have the webhook url and secret, it's time to set everything up on the Github repository side. Navigate to the settings of your repository on Github, under "Settings/Webhooks" press the "Add webhook" button. Fill in the webhook url and your secret.
 
-### 👉 Troubleshooting
+### 💾 Storage
+
+Rancher's `local-path-provisioner` is a great start for storage but soon you might find you need more features like replicated block storage, or to connect to a NFS/SMB/iSCSI server. Check out the projects below to read up more on some storage solutions that might work for you.
+
+- [rook-ceph](https://github.com/rook/rook)
+- [longhorn](https://github.com/longhorn/longhorn)
+- [openebs](https://github.com/openebs/openebs)
+- [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner)
+- [democratic-csi](https://github.com/democratic-csi/democratic-csi)
+- [csi-driver-nfs](https://github.com/kubernetes-csi/csi-driver-nfs)
+- [synology-csi](https://github.com/SynologyOpenSource/synology-csi)
+
+## 👉 Troubleshooting
 
 Our [wiki](https://github.com/k8s-at-home/template-cluster-k3s/wiki) (WIP, contributions welcome) is a good place to start troubleshooting issues. If that doesn't cover your issue, come join and say Hi in our [Discord](https://discord.gg/k8s-at-home) server by starting a new thread in the #kubernetes support channel.
 
@@ -387,30 +489,12 @@ You may also open a issue on this GitHub repo or open a [discussion on GitHub](h
 
 The world is your cluster, see below for important things you could work on adding.
 
-### 🤖 Renovatebot
-
-[Renovatebot](https://www.whitesourcesoftware.com/free-developer-tools/renovate/) will scan your repository and offer PRs when it finds dependencies out of date. Common dependencies it will discover and update are Flux, Ansible Galaxy Roles, Terraform Providers, Kubernetes Helm Charts, Kubernetes Container Images, Pre-commit hooks updates, and more!
-
-The base Renovate configuration provided in your repository can be view at [.github/renovate.json5](https://github.com/k8s-at-home/template-cluster-k3s/blob/main/.github/renovate.json5). If you notice this only runs on weekends and you can [change the schedule to anything you want](https://docs.renovatebot.com/presets-schedule/) or simply remove it.
-
-To enable Renovate on your repository, click the 'Configure' button over at their [Github app page](https://github.com/apps/renovate) and choose your repository. Over time Renovate will create PRs for out-of-date dependencies it finds. Any merged PRs that are in the cluster directory Flux will deploy.
-
 Our Check out our [wiki](https://github.com/k8s-at-home/template-cluster-k3s/wiki) (WIP, contributions welcome) for more integrations!
-
-### 💾 Storage
-
-In no particular order, here are some popular storage related items you could install and use in your cluster:
-
-- [rook-ceph](https://github.com/rook/rook)
-- [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner)
-- [democratic-csi](https://github.com/democratic-csi/democratic-csi)
-- [csi-driver-nfs](https://github.com/kubernetes-csi/csi-driver-nfs)
-- [longhorn](https://github.com/longhorn/longhorn)
 
 ## 🤝 Thanks
 
 Big shout out to all the authors and contributors to the projects that we are using in this repository.
 
-Community member @Whazor created [this website](https://whazor.github.io/k8s-at-home-search/) as a means to search Helm Releases across GitHub. You may use it as a means to get ideas on how to configure an applications' Helm values.
+Community member @Whazor created [this website](https://whazor.github.io/k8s-at-home-search/) as a creative way to search Helm Releases across GitHub. You may use it as a means to get ideas on how to configure an applications' Helm values.
 
 Many people have shared their awesome repositories over at [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes).
