@@ -63,14 +63,14 @@ spec:
           hajimari.io/icon: "cloud-download"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "qbittorrent.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
-              - "qbittorrent.${SECRET_DOMAIN}"
-            secretName: qbittorrent-tls
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
+              - *host
     persistence:
       config:
         enabled: true

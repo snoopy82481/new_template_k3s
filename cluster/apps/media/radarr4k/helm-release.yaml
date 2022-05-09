@@ -44,14 +44,14 @@ spec:
           hajimari.io/icon: "filmstrip"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "radarr4k.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
-              - "radarr4k.${SECRET_DOMAIN}"
-            secretName: radarr4k-tls
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
+              - *host
     podSecurityContext:
       supplementalGroups:
         - 100

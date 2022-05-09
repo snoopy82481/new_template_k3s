@@ -46,14 +46,14 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "error-pages.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
-              - "error-pages.${SECRET_DOMAIN}"
-            secretName: error-pages-tls
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
+              - *host
     resources:
       requests:
         memory: 100Mi

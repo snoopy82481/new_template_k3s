@@ -44,14 +44,14 @@ spec:
           hajimari.io/icon: "television-box"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "sonarr.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
-              - "sonarr.${SECRET_DOMAIN}"
-            secretName: sonarr-tls
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
+              - *host
     podSecurityContext:
       supplementalGroups:
         - 100

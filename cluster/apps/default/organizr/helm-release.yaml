@@ -36,15 +36,6 @@ spec:
         ports:
           http:
             port: 80
-      # ui:
-      #   enabled: true
-      #   type: LoadBalancer
-      #   ports:
-      #     ui:
-      #       enabled: true
-      #       port: 80
-      #       protocol: TCP
-      #       targetPort: 80
     ingress:
       main:
         enabled: true
@@ -54,13 +45,14 @@ spec:
           hajimari.io/icon: "television-box"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "organizr.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
-              - "organizr.${SECRET_DOMAIN}"
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
+              - *host
     podSecurityContext:
       supplementalGroups:
         - 100
