@@ -29,6 +29,7 @@ spec:
       tag: v3.5.3
     env:
       TZ: ${TZ}
+      HOST_WHITELIST_ENTRIES: "{{ .Release.Name }}.${SECRET_DOMAIN}"
     service:
       main:
         ports:
