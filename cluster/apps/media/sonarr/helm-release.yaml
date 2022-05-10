@@ -53,8 +53,13 @@ spec:
             hosts:
               - *host
     podSecurityContext:
-      supplementalGroups:
-        - 100
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
+    # podSecurityContext:
+    #   supplementalGroups:
+    #     - 100
     persistence:
       config:
         enabled: true
