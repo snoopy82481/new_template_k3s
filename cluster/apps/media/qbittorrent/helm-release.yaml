@@ -36,8 +36,6 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
-      supplementalGroups:
-        - 65539
     settings:
       automaticPortSetup: false
     env:
