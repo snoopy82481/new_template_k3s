@@ -86,12 +86,12 @@ spec:
     experimental:
       plugins:
         enabled: false
-    persistence:
-      traefik-config:
-        enabled: true
-        type: configMap
-        name: traefik-configs
-      mountPath: /etc/traefik
+    # persistence:
+    #   traefik-config:
+    #     enabled: true
+    #     type: configMap
+    #     name: traefik-configs
+    #   mountPath: /etc/traefik
     resources:
       requests:
         memory: 100Mi
