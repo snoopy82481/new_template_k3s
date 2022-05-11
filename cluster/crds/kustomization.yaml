@@ -6,3 +6,4 @@ resources:
   - traefik
   - rook-ceph
   - external-dns
+  - system-upgrade-controller
