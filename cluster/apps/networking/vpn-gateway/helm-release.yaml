@@ -50,6 +50,8 @@ spec:
         securityContext:
           runAsUser: 568
           runAsGroup: 568
+          fsGroup: 568
+          fsGroupChangePolicy: OnRootMismatch
           capabilities:
             drop:
               - SYS_MODULE
