@@ -23,9 +23,7 @@ spec:
     remediation:
       retries: 3
   values:
-    image:
-      repository: docker.io/ealen/echo-server
-      tag: 0.5.1
+    replicaCount: 2
     ingress:
       enabled: true
       annotations:
