@@ -31,11 +31,9 @@ spec:
     hostname: qbittorrent
     podAnnotations:
       setGateway: "true"
-    # podSecurityContext:
-    #   runAsUser: 568
-    #   runAsGroup: 568
-    #   fsGroup: 568
-    #   fsGroupChangePolicy: OnRootMismatch
+    podSecurityContext:
+      supplementalGroups:
+        - 100
     settings:
       automaticPortSetup: false
     env:
@@ -64,7 +62,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "cloud-download"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          # traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
