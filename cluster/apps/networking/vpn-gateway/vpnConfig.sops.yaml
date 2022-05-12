@@ -5,7 +5,7 @@ metadata:
     name: vpnconfig
     namespace: vpn
 stringData:
-    vpnConfigfile: ENC[AES256_GCM,data:FIMs3sETbmfzrRczuTP5R+wWZ4RVx4JieHGWUDOCkR6PcoBLPtP4sbCptrAIM0QwqmFR2XHgOTmgbaPnRJfYtReMdQdNLtPOSnB6C+MDdJzKb0rTvBhrySyjbzjRHy2YjxK2lh7VcCLIphw9TyuUsnIkwVhfl40ys/LmyoEFJe+LXk1B8HcPyxTrE1yoj2JS/vK+sBX4KzwhYHunAgWWD6eNayFiPtYE2Y+xPzwlKq8RN9L/iTu5Oybi/yghMjeitxWc9JImgmhE55TzHTmuQu7cpA4JsY1wJuofXoR/co5cQtMim9shNgqYS13pebT4cK88tfmm6xuKGBDqRzY3xS+R7SNJhsSghnt6zMvV,iv:AxiWsGBkGwSDz2maiwwbrhCjrmb8k7e2M3mVo/33ZQg=,tag:tO4pVDB8CWYUzi/N9Pfuqw==,type:str]
+    vpnConfigfile: ENC[AES256_GCM,data:YydR72YrNnoos+Cd41dL0NOKcLxZ3tmiNu/pwULhLKtDvwzI2kLsveBBl2Pd5Rnpk7q/z2/VIed+3f93oARyMEAZI4zdP5xxAF1yA3eRhGNAo9SkRYONfN7bQ/sTCt5mRpGU4R0hUdz+NOreevtlXk0zdwBDXTz7LHnijMehaER84LFg706oELUY9J5D7It4+Vb23bMGgtCZoeVXnqBtdX66g/UXOHEnimNp/c3c7si9nRm/Dgl8pOxUaNWq5L90Ad2TWRTBttKs377qbsNZ3xdfdGYylK6k92+cJTifyURSKC5W0plt8K341B/XBEaC53/tgMFLwCQZygVvUr2xH7dVuPNTHZL1yzPlWzgVDw==,iv:l67VPzcGm8QT/e1UJtkeIPKpeID7iqWh1I6jEmiQBso=,tag:2J4BdUXGUhQG73iUQ4lXRg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -21,8 +21,8 @@ sops:
             UzBFZVRwN0J0dlNMb3oyQ08wclVLQ0kK15nnKWE8159zQbuSMvzmxisCbXSn1x51
             i2XqNqNR//gKd+sUNiT8jXgkPnZdCJ9Pkvx1M6t1LjqfRp/NwJrm3Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-03-01T20:38:01Z"
-    mac: ENC[AES256_GCM,data:I4HU5cctBw8p6Tv3o8osezhtDfXFomJsFAbFQAusXohy6P6hMKnP2MCooSvSU3D2cqSuxKaq7RZauMuCEVoJQy4dlgJ/lfy/V2D1nQy9cagjBas6bg1yiFAyget2+xi0CEuSeqZWY3zeWfs1MfL5eX0CnON8gh42TixU81UstbA=,iv:zM6Jx/0JugspU7qd/kTXYLu/PV8ZBK9diXM8ceS3T8w=,tag:RoWqMvaSNkHWpxRiB4VZtw==,type:str]
+    lastmodified: "2022-05-12T00:11:14Z"
+    mac: ENC[AES256_GCM,data:8LpN+yp4TPwKzTTP6RvHuxm9pNYcqvGP16DTmv5WUxrb/jRHgtio/PRqkZ5ojpRYWJCAeUyoILhV0dAF+kr3eDa0lyQ4YjMAIhySwi0BnCx2cHxi8mFV9tkSPp8H1EdXjVgF/WQMXijEDSdxX5BuUr0H1X44N0+Puob9Ba9GHcE=,iv:niGU48aOL/yPREpjKegMXQECKlqlXB2M/4OQdTwqhRY=,tag:SXPMtwGh7ZtDDqMlfxxjYw==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
-    version: 3.7.1
+    version: 3.7.2
