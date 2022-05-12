@@ -30,7 +30,7 @@ spec:
       repository: ghcr.io/tarampampam/error-pages
       tag: 2.15.0
     env:
-      TX: ${TZ}
+      TZ: ${TZ}
       TEMPLATE_NAME: l7-dark
       SHOW_DETAILS: "false"
     service:
