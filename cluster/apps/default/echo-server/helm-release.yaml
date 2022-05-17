@@ -24,6 +24,9 @@ spec:
       retries: 3
   values:
     replicaCount: 2
+    image:
+      repository: ealen/echo-server
+      tag: 0.5.1
     ingress:
       enabled: true
       ingressClassName: "traefik"
