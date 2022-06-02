@@ -11,5 +11,5 @@ resources:
   - prowlarr
   - tautulli
   - qbittorrent
-  - trash-updater
+  - recyclarr
   - bazarr
