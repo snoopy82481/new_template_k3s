@@ -80,3 +80,11 @@ tasks:
       - task: gitrepositories
       - task: certificates
       - task: pods
+
+  install:
+    desc: Install cluster resources
+    cmds:
+      - task: flux:namespace
+      - task: flux:secret
+      - sops --decrypt cluster/base/flux-system/github-deploy-key.sops.yaml | kubectl apply -f -
+      - task: flux:install
