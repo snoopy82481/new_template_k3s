@@ -59,8 +59,6 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-      toolbox:
-        enabled: true
       skipUpgradeChecks: false
       storage:
         useAllNodes: false
