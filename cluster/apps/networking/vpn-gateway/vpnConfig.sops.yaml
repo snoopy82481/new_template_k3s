@@ -5,7 +5,7 @@ metadata:
     name: vpnconfig
     namespace: vpn
 stringData:
-    vpnConfigfile: ENC[AES256_GCM,data:YydR72YrNnoos+Cd41dL0NOKcLxZ3tmiNu/pwULhLKtDvwzI2kLsveBBl2Pd5Rnpk7q/z2/VIed+3f93oARyMEAZI4zdP5xxAF1yA3eRhGNAo9SkRYONfN7bQ/sTCt5mRpGU4R0hUdz+NOreevtlXk0zdwBDXTz7LHnijMehaER84LFg706oELUY9J5D7It4+Vb23bMGgtCZoeVXnqBtdX66g/UXOHEnimNp/c3c7si9nRm/Dgl8pOxUaNWq5L90Ad2TWRTBttKs377qbsNZ3xdfdGYylK6k92+cJTifyURSKC5W0plt8K341B/XBEaC53/tgMFLwCQZygVvUr2xH7dVuPNTHZL1yzPlWzgVDw==,iv:l67VPzcGm8QT/e1UJtkeIPKpeID7iqWh1I6jEmiQBso=,tag:2J4BdUXGUhQG73iUQ4lXRg==,type:str]
+    vpnConfigfile: ENC[AES256_GCM,data:6MnKUxOBmHYWYnIr3WDEIDhGk8xflS364GoYNzM9I43fXTbG0yzZ+VDdZyOrX63Mwys/N+HnDECIvEendyu/zz1IJwd/1dJLtAVIlSIm/z0Kfn9+oLGHbx833LY1AxN1vQACF6tj+/Gd0HkaKAO79UwIGPtd6KotYwMjIdZipt4nJ8CAtAeTJJq+ggrEDDtGvIo4AvxkSkSu6lxIqU2TRXQeZQx32QmtSSGXsq/y34ieCKXcYAU/BSIDrYkyZoW1eJss2sBILVP+8hh2lEzOkUpl6mGMjHQrs5SdghzxkN3LsODCZlCq36gy3G8sSaujO3oE7CL1kwveiPRoAUC3HCRqmH7VFV1k9imC5xEOdw==,iv:3X31wfR1UZYzEPZoMrIqLsJ/0QibOaDnaTvNJ5CEx5c=,tag:g41hXXmkEhOkLOPdn/ZhpA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -21,8 +21,8 @@ sops:
             UzBFZVRwN0J0dlNMb3oyQ08wclVLQ0kK15nnKWE8159zQbuSMvzmxisCbXSn1x51
             i2XqNqNR//gKd+sUNiT8jXgkPnZdCJ9Pkvx1M6t1LjqfRp/NwJrm3Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-05-12T00:11:14Z"
-    mac: ENC[AES256_GCM,data:8LpN+yp4TPwKzTTP6RvHuxm9pNYcqvGP16DTmv5WUxrb/jRHgtio/PRqkZ5ojpRYWJCAeUyoILhV0dAF+kr3eDa0lyQ4YjMAIhySwi0BnCx2cHxi8mFV9tkSPp8H1EdXjVgF/WQMXijEDSdxX5BuUr0H1X44N0+Puob9Ba9GHcE=,iv:niGU48aOL/yPREpjKegMXQECKlqlXB2M/4OQdTwqhRY=,tag:SXPMtwGh7ZtDDqMlfxxjYw==,type:str]
+    lastmodified: "2022-06-08T15:07:36Z"
+    mac: ENC[AES256_GCM,data:cvgKSTX73NCvmRl47RyxW8KnuUj3YaDr+YBcy705sTAICNsA2fZgc2k1aVsHLcgoobAktIsKX2eGqZt6WXTXTQFbZx9ZmkIhd9hA76CdK7aTj4W13D5LeCaduwALyxHEJO60l2VnHfM+Dcl1panbbTTyHWVTOHx/5grWtF3Ez3g=,iv:h7k8TDybYn2ooK5becvTWTu9OvmDldNbo44jUkjb81g=,tag:zcXFI6nJRl7pjOZ8Lr1RNQ==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
-    version: 3.7.2
+    version: 3.7.3
