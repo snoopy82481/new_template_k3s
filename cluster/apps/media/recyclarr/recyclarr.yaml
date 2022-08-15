@@ -1,5 +1,5 @@
 sonarr:
-  - base_url: http://10.43.212.233:8989
+  - base_url: http://10.43.67.137:8989
     api_key: ${SONARR_APIKEY}
 
     quality_definition: series
@@ -12,7 +12,7 @@ sonarr:
         strict_negative_scores: false
         tags: [tv]
 
-  - base_url: http://10.43.75.251:8989
+  - base_url: http://10.43.182.24:8989
     api_key: ${SONARR_ANIME_APIKEY}
 
     quality_definition: anime
@@ -31,7 +31,7 @@ sonarr:
         tags: [anime]
 
 radarr:
-  - base_url: http://10.43.2.203:7878
+  - base_url: http://10.43.144.236:7878
     api_key: ${RADARR_APIKEY}
 
     quality_definition:
@@ -48,6 +48,7 @@ radarr:
           - 3D
           - No-RlsGroup
           - Obfuscated
+          - Retags
           - DV (WEBDL)
           - Hybrid
           - Remaster
@@ -57,10 +58,20 @@ radarr:
           - IMAX
           - IMAX Enhanced
           - HQ
-          - HQ-WEBDL
           - HQ-Remux
+          - HQ-WEBDL
+          # TODO(Radarr update to include release group): Remove HQ-WEBDL, HQ-Remux, HQ
+          # - WEB Tier 01
+          # - WEB Tier 02
+          # - WEB Tier 03
+          # - Remux Tier 01
+          # - Remux Tier 02
+          # - HD Bluray Tier 01
+          # - HD Bluray Tier 02
           - Repack/Proper
+          - Repack2
           - FreeLeech
+          - Bad Dual Groups
 
         quality_profiles:
           - name: Anime 1080p (Movie Versions + Misc)
@@ -128,7 +139,7 @@ radarr:
           - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
             score: 100
 
-  - base_url: http://10.43.24.168:7878
+  - base_url: http://10.43.123.135:7878
     api_key: ${RADARR_UHD_APIKEY}
 
     quality_definition:
@@ -145,6 +156,8 @@ radarr:
           - 3D
           - No-RlsGroup
           - Obfuscated
+          - Bad Dual Groups
+          - Retags
           - DV (WEBDL)
           - DV
           - DV HLG
@@ -157,9 +170,18 @@ radarr:
           - IMAX
           - IMAX Enhanced
           - HQ
-          - HQ-WEBDL
           - HQ-Remux
+          - HQ-WEBDL
+          # TODO(Radarr update to include release group): Remove HQ-WEBDL, HQ-Remux, HQ
+          # - WEB Tier 01
+          # - WEB Tier 02
+          # - WEB Tier 03
+          # - Remux Tier 01
+          # - Remux Tier 02
+          # - HD Bluray Tier 01
+          # - HD Bluray Tier 02
           - Repack/Proper
+          - Repack2
           - FreeLeech
           - HDR10
           - HDR10+
@@ -240,7 +262,7 @@ radarr:
           - DV
           - DV HLG
           - DV SDR
-          - HDR10+
+          - HDR10Plus
           - HDR10
           - HDR
           - HDR (undefined)
@@ -255,6 +277,16 @@ radarr:
           - IMAX Enhanced
           - HQ-WEBDL
           - HQ-Remux
+          # TODO(Radarr update to include release group): Remove HQ-WEBDL, HQ-Remux, HQ, flights
+          # - WEB Tier 01
+          # - WEB Tier 02
+          # - WEB Tier 03
+          # - Remux Tier 01
+          # - Remux Tier 02
+          # - HD Bluray Tier 01
+          # - HD Bluray Tier 02
+          - Flights (no IMAX)
+          - HQ
           - UHD (CtrlHD)
           - UHD (DON)
           - UHD (W4NK3R)
@@ -263,6 +295,7 @@ radarr:
           - UHD (WEBDV)
           - UHD (SPHD)
           - Repack/Proper
+          - Repack2
           - BR-DISK
           - EVO (no WEBDL)
           - LQ
@@ -270,7 +303,9 @@ radarr:
           - 3D
           - No-RlsGroup
           - Obfuscated
-          - Repack/Proper
+          - Retags
+          - Bad Dual Groups
+          - DV (WEBDL)
 
         quality_profiles:
           - name: WEBDL|Remux|Bluray|2160p
