@@ -24,6 +24,10 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      repository: linuxserver/heimdall
+      tag: version-2.4.13
+      pullPolicy: IfNotPresent
     env:
       TZ: ${TZ}
     service:
