@@ -1,5 +1,5 @@
 sonarr:
-  - base_url: http://10.43.67.137:8989
+  - base_url: http://sonarr
     api_key: ${SONARR_APIKEY}
 
     quality_definition: series
@@ -12,7 +12,7 @@ sonarr:
         strict_negative_scores: false
         tags: [tv]
 
-  - base_url: http://10.43.182.24:8989
+  - base_url: http://sonarranime
     api_key: ${SONARR_ANIME_APIKEY}
 
     quality_definition: anime
@@ -31,7 +31,7 @@ sonarr:
         tags: [anime]
 
 radarr:
-  - base_url: http://10.43.144.236:7878
+  - base_url: http://radarr
     api_key: ${RADARR_APIKEY}
 
     quality_definition:
@@ -76,14 +76,23 @@ radarr:
           - 8cd3ac70db7ac318cf9a0e01333940a4 #SiC
 
         quality_profiles:
-          - name: Anime 1080p (Movie Versions + Misc)
-          - name: Anime 1080p (Movie Versions + Misc)!
-          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
-          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
-          - name: Bluray-1080p (Movie Versions + Misc)
-          - name: Bluray-1080p (Movie Versions + Misc)!
-          - name: Remux-1080p (Audio Advanced + Movie Versions)
-          - name: Remux-1080p (Audio Advanced + Movie Versions)!
+          - names:
+              - Anime 1080p (Movie Versions + Misc)
+              - Anime 1080p (Movie Versions + Misc)!
+              - Anime Remux-1080P  (Audio Advanced + Movie Versions)
+              - Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+              - Bluray-1080p (Movie Versions + Misc)
+              - Bluray-1080p (Movie Versions + Misc)!
+              - Remux-1080p (Audio Advanced + Movie Versions)
+              - Remux-1080p (Audio Advanced + Movie Versions)!
+              - Anime 1080p (Movie Versions + Misc)
+              - Anime 1080p (Movie Versions + Misc)!
+              - Anime Remux-1080P  (Audio Advanced + Movie Versions)
+              - Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+              - Bluray-1080p (Movie Versions + Misc)
+              - Bluray-1080p (Movie Versions + Misc)!
+              - Remux-1080p (Audio Advanced + Movie Versions)
+              - Remux-1080p (Audio Advanced + Movie Versions)!
 
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca #Multi
@@ -123,10 +132,11 @@ radarr:
           - c2998bd0d90ed5621d8df281e839436e #DD
 
         quality_profiles:
-          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
-          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
-          - name: Remux-1080p (Audio Advanced + Movie Versions)
-          - name: Remux-1080p (Audio Advanced + Movie Versions)!
+          - names:
+              - Anime Remux-1080P  (Audio Advanced + Movie Versions)
+              - Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+              - Remux-1080p (Audio Advanced + Movie Versions)
+              - Remux-1080p (Audio Advanced + Movie Versions)!
 
       - trash_ids:
           - 4a3b087eea2ce012fcc1ce319259a3be #Anime Dual Audio
@@ -141,7 +151,7 @@ radarr:
           - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
             score: 100
 
-  - base_url: http://10.43.123.135:7878
+  - base_url: http://radarr4k
     api_key: ${RADARR_UHD_APIKEY}
 
     quality_definition:
@@ -164,6 +174,7 @@ radarr:
           - 58d6a88f13e2db7f5059c41047876f00 #DV
           - 55d53828b9d81cbe20b02efd00aa0efd #DV HLG
           - a3e19f8f627608af0211acd02bf89735 #DV SDR
+          - e23edd2482476e595fb990b12e7c609c #DV HDR10
           - 0f12c086e289cf966fa5948eac571f44 #Hybrid
           - 570bc9ebecd92723d2d21500f4be314c #Remaster
           - eca37840c13c6ef2dd0262b141a5482f #4K Remaster
@@ -201,10 +212,11 @@ radarr:
           - 8cd3ac70db7ac318cf9a0e01333940a4 #SiC
 
         quality_profiles:
-          - name: 4k (Movie Versions + HDR Metadata)
-          - name: Anime 4k (Movie Versions + HDR Metadata)
-          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
-          - name: Remux-4k (Movie Versions + HDR Metadata)
+          - names:
+              - 4k (Movie Versions + HDR Metadata)
+              - Anime 4k (Movie Versions + HDR Metadata)
+              - Anime Remux-4k (Movie Versions + HDR Metadata)
+              - Remux-4k (Movie Versions + HDR Metadata)
 
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca #Multi
@@ -236,8 +248,9 @@ radarr:
           - c2998bd0d90ed5621d8df281e839436e #DD
 
         quality_profiles:
-          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
-          - name: Remux-4k (Movie Versions + HDR Metadata)
+          - names:
+              - Anime Remux-4k (Movie Versions + HDR Metadata)
+              - Remux-4k (Movie Versions + HDR Metadata)
 
       - trash_ids:
           - 4a3b087eea2ce012fcc1ce319259a3be #Anime Dual Audio
@@ -263,7 +276,7 @@ radarr:
           - 1c1a4c5e823891c75bc50380a6866f73 #DTS
           - 240770601cc226190c367ef59aba7463 #AAC
           - c2998bd0d90ed5621d8df281e839436e #DD
-          - dfb86d5941bc9075d6af23b09c2aeecd #DV HDR10
+          - e23edd2482476e595fb990b12e7c609c #DV HDR10
           - 58d6a88f13e2db7f5059c41047876f00 #DV
           - 55d53828b9d81cbe20b02efd00aa0efd #DV HLG
           - a3e19f8f627608af0211acd02bf89735 #DV SDR
