@@ -1,5 +1,3 @@
-# Editors
-.vscode/
 # Trash
 .DS_Store
 Thumbs.db
@@ -11,12 +9,11 @@ kubeconfig
 *.agekey
 *.pub
 *.key
+github-deploy-key*
 # Ansible
 xanmanning.k3s*
 # Terraform
 .terraform
 .terraform.tfstate*
 terraform.tfstate*
-cluster/apps/media/qbittorrent/helm-release_old.yaml
-.taskfiles/format_old.yml
-cluster/github-deploy-key
+megalinter-reports

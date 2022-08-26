@@ -2,9 +2,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - traefik
+  - namespace.yaml
   - external-dns
-  - external-services
-  - vpn-gateway
-  - error-pages
   - k8s-gateway
+  - ingress-nginx
+  - metallb
+  - theme-park

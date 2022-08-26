@@ -13,7 +13,7 @@ spec:
       version: v1.9.9
       sourceRef:
         kind: HelmRepository
-        name: rook-ceph-charts
+        name: rook-ceph
         namespace: flux-system
   install:
     createNamespace: true
@@ -30,10 +30,7 @@ spec:
       enabled: false
     ingress:
       dashboard:
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        ingressClassName: "nginx"
         host:
           name: &host "rook.${SECRET_DOMAIN}"
           path: "/"
@@ -47,12 +44,8 @@ spec:
       bdev_async_discard = true
     cephClusterSpec:
       cephVersion:
-        image: quay.io/ceph/ceph:v17.2.3
-      # network:
-      #   provider: host
-      #   connections:
-      #     compression:
-      #       enabled: true
+      network:
+        provider: host
       crashCollector:
         disable: false
       dashboard:
