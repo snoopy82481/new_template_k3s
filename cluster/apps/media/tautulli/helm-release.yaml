@@ -50,8 +50,7 @@ spec:
               - path: /
                 pathType: Prefix
         tls:
-          - secretName: "{{ .Release.Name }}-tls"
-            hosts:
+          - hosts:
               - *host
     podSecurityContext:
       runAsUser: 568
