@@ -5,24 +5,22 @@ metadata:
   name: prowlarr
   namespace: media
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: prowlarr
-      version: 4.5.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     remediation:
-      retries: 3
+      retries: 5
   values:
     image:
       repository: cr.hotio.dev/hotio/prowlarr
@@ -41,22 +39,28 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "eye-circle"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_PUBLIC_DOMAIN}/css/base/prowlarr/nord.css"></head>';
+            sub_filter_once on;
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - secretName: "{{ .Release.Name }}-tls"
-            hosts:
+          - hosts:
               - *host
+    additionalContainers:
+      flaresolver:
+        image:
+          repository: ghcr.io/flaresolverr/flaresolverr
+          tag: v2.2.6
+          pullPolicy: IfNotPresent
+        env:
+          TZ: ${TZ}
     persistence:
       config:
         enabled: true
@@ -64,15 +68,13 @@ spec:
         mountPath: /config
       backup:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "truenas.${SECRET_DOMAIN}"
-            path: /mnt/storage0/backup
+        type: nfs
+        server: "truenas.${SECRET_DOMAIN}"
+        path: /mnt/storage0/backup
         mountPath: /backup
     resources:
       requests:
+        cpu: 10m
         memory: 250Mi
-        cpu: 500m
       limits:
-        memory: 750Mi
+        memory: 2000Mi
