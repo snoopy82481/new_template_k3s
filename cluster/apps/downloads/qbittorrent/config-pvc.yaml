@@ -4,10 +4,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: qbittorrent-config-v1
   namespace: downloads
+  labels:
+    app.kubernetes.io/name: &name qbittorrent
+    app.kubernetes.io/instance: *name
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 512Mi
   storageClassName: ceph-block
