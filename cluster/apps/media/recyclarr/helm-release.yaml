@@ -27,7 +27,15 @@ spec:
       tag: 2.4@sha256:daf5c2f261c9bf36972bab1e204c02b7df4126c07bcea0e3d7cd69a08c4b0cf1
     env:
       TZ: ${TZ}
+    service:
+      main:
+        ports:
+          http:
+            port: 1080
     persistence:
+      config:
+        enabled: true
+        existingClaim: recyclarr-config-v1
       recyclarr:
         enable: true
         type: configMap
