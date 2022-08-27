@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app recyclarr
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: ghcr.io/recyclarr/recyclarr
+      tag: 2.4@sha256:daf5c2f261c9bf36972bab1e204c02b7df4126c07bcea0e3d7cd69a08c4b0cf1
+    env:
+      TZ: ${TZ}
+    persistence:
+      recyclarr:
+        enable: true
+        type: configMap
+        name: *app
+        subpath: recyclarr.yaml
+        mountPath: /config/recyclarr.yaml
+        readonly: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 2000Mi
