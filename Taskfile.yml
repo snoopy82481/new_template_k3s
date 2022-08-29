@@ -18,6 +18,7 @@ includes:
   cluster: .taskfiles/ClusterTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
+  sops: .taskfiles/SopsTasks.yml
 
 tasks:
 
@@ -36,7 +37,6 @@ tasks:
         ansible
         direnv
         fluxcd/tap/flux
-        gitleaks
         go-task/tap/go-task
         helm
         ipcalc
@@ -48,6 +48,7 @@ tasks:
         sops
         stern
         terraform
+        tflint
         yamllint
         yq
 
