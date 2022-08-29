@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: ghcr.io/recyclarr/recyclarr
-      tag: 2.4@sha256:daf5c2f261c9bf36972bab1e204c02b7df4126c07bcea0e3d7cd69a08c4b0cf1
+      tag: 2.4@sha256:e68240471349e2ee4e98df70dbe6f90dade1113ab443f5dd8d68490dcc7267f0
     env:
       TZ: ${TZ}
     service:
