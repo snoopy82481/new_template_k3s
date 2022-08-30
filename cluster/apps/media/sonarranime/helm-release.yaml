@@ -5,35 +5,37 @@ metadata:
   name: sonarranime
   namespace: media
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: sonarr
-      version: 16.3.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     remediation:
-      retries: 3
+      retries: 5
   values:
     image:
-      repository: ghcr.io/k8s-at-home/sonarr
-      tag: v3.0.9.1549
+      repository: ghcr.io/onedr0p/sonarr
+      tag: 3.0.9.1549@sha256:288affeca993ad7bd9fbbdde8bc368872b39e8e5c0fe42519091137a32dd9389
     env:
       TZ: ${TZ}
+      SONARR__INSTANCE_NAME: Sonarr_Anime
+      SONARR__PORT: &port 8989
+      SONARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+      SONARR__LOG_LEVEL: info
     service:
       main:
         ports:
           http:
-            port: 8989
+            port: *port
     ingress:
       main:
         enabled: true
@@ -58,6 +60,8 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
+      supplementalGroups:
+        - 100
     persistence:
       config:
         enabled: true
@@ -80,7 +84,7 @@ spec:
         mountPath: /backup
     resources:
       requests:
+        cpu: 10m
         memory: 250Mi
-        cpu: 500m
       limits:
-        memory: 1500Mi
+        memory: 2000Mi
