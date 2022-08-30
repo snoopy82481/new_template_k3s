@@ -45,7 +45,8 @@ spec:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
               - *host
     topologySpreadConstraints:
       - maxSkew: 1

@@ -28,7 +28,9 @@ spec:
     env:
       TZ: ${TZ}
       SABNZBD_PORT: &port 8080
-      HOST_WHITELIST_ENTRIES: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      HOST_WHITELIST_ENTRIES: >-
+        sabnzbd,
+        "{{ .Release.Name }}.${SECRET_DOMAIN}"
     service:
       main:
         ports:
@@ -50,7 +52,8 @@ spec:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
               - *host
     persistence:
       config:

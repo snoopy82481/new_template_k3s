@@ -27,7 +27,7 @@ spec:
       tag: 3.0.9.1549@sha256:288affeca993ad7bd9fbbdde8bc368872b39e8e5c0fe42519091137a32dd9389
     env:
       TZ: ${TZ}
-      SONARR__INSTANCE_NAME: "Sonarr Anime"
+      SONARR__INSTANCE_NAME: "Sonarr_Anime"
       SONARR__PORT: &port 8989
       SONARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
       SONARR__LOG_LEVEL: info
@@ -52,7 +52,8 @@ spec:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
+          - secretName: "{{ .Release.Name }}-tls"
+            hosts:
               - *host
     podSecurityContext:
       runAsUser: 568
