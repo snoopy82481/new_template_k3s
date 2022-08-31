@@ -5,12 +5,11 @@ metadata:
   name: rook-ceph-cluster
   namespace: rook-ceph
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.rook.io/release
       chart: rook-ceph-cluster
-      version: v1.9.9
+      version: v1.9.10
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
@@ -31,13 +30,15 @@ spec:
     ingress:
       dashboard:
         ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-staging"
         host:
           name: &host "rook.${SECRET_DOMAIN}"
           path: "/"
         tls:
-          - hosts:
+          - secretName: rook-tls
+            hosts:
               - *host
-            secretName: rook-tls
     configOverride: |
       [global]
       bdev_enable_discard = true
