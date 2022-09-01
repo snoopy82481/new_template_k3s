@@ -76,23 +76,14 @@ radarr:
           - 8cd3ac70db7ac318cf9a0e01333940a4 #SiC
 
         quality_profiles:
-          - names:
-              - Anime 1080p (Movie Versions + Misc)
-              - Anime 1080p (Movie Versions + Misc)!
-              - Anime Remux-1080P  (Audio Advanced + Movie Versions)
-              - Anime Remux-1080P  (Audio Advanced + Movie Versions)!
-              - Bluray-1080p (Movie Versions + Misc)
-              - Bluray-1080p (Movie Versions + Misc)!
-              - Remux-1080p (Audio Advanced + Movie Versions)
-              - Remux-1080p (Audio Advanced + Movie Versions)!
-              - Anime 1080p (Movie Versions + Misc)
-              - Anime 1080p (Movie Versions + Misc)!
-              - Anime Remux-1080P  (Audio Advanced + Movie Versions)
-              - Anime Remux-1080P  (Audio Advanced + Movie Versions)!
-              - Bluray-1080p (Movie Versions + Misc)
-              - Bluray-1080p (Movie Versions + Misc)!
-              - Remux-1080p (Audio Advanced + Movie Versions)
-              - Remux-1080p (Audio Advanced + Movie Versions)!
+          - name: Anime 1080p (Movie Versions + Misc)
+          - name: Anime 1080p (Movie Versions + Misc)!
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+          - name: Bluray-1080p (Movie Versions + Misc)
+          - name: Bluray-1080p (Movie Versions + Misc)!
+          - name: Remux-1080p (Audio Advanced + Movie Versions)
+          - name: Remux-1080p (Audio Advanced + Movie Versions)!
 
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca #Multi
@@ -132,11 +123,10 @@ radarr:
           - c2998bd0d90ed5621d8df281e839436e #DD
 
         quality_profiles:
-          - names:
-              - Anime Remux-1080P  (Audio Advanced + Movie Versions)
-              - Anime Remux-1080P  (Audio Advanced + Movie Versions)!
-              - Remux-1080p (Audio Advanced + Movie Versions)
-              - Remux-1080p (Audio Advanced + Movie Versions)!
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)
+          - name: Anime Remux-1080P  (Audio Advanced + Movie Versions)!
+          - name: Remux-1080p (Audio Advanced + Movie Versions)
+          - name: Remux-1080p (Audio Advanced + Movie Versions)!
 
       - trash_ids:
           - 4a3b087eea2ce012fcc1ce319259a3be #Anime Dual Audio
@@ -212,11 +202,10 @@ radarr:
           - 8cd3ac70db7ac318cf9a0e01333940a4 #SiC
 
         quality_profiles:
-          - names:
-              - 4k (Movie Versions + HDR Metadata)
-              - Anime 4k (Movie Versions + HDR Metadata)
-              - Anime Remux-4k (Movie Versions + HDR Metadata)
-              - Remux-4k (Movie Versions + HDR Metadata)
+          - name: 4k (Movie Versions + HDR Metadata)
+          - name: Anime 4k (Movie Versions + HDR Metadata)
+          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
+          - name: Remux-4k (Movie Versions + HDR Metadata)
 
       - trash_ids:
           - 4b900e171accbfb172729b63323ea8ca #Multi
@@ -248,9 +237,8 @@ radarr:
           - c2998bd0d90ed5621d8df281e839436e #DD
 
         quality_profiles:
-          - names:
-              - Anime Remux-4k (Movie Versions + HDR Metadata)
-              - Remux-4k (Movie Versions + HDR Metadata)
+          - name: Anime Remux-4k (Movie Versions + HDR Metadata)
+          - name: Remux-4k (Movie Versions + HDR Metadata)
 
       - trash_ids:
           - 4a3b087eea2ce012fcc1ce319259a3be #Anime Dual Audio
