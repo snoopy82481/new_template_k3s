@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/sonarr
-      tag: 3.0.9.1549@sha256:89be09d3e11ec4a70f0c3f33cbdbe2ecf1b4f435f97d685167ebc0e56ec72e5a
+      tag: 3.0.9.1549@sha256:436b4107b02f7cbe20ffbcb99d281d32d143c3e371141326f31a23cdeb49babc
     env:
       TZ: ${TZ}
       SONARR__INSTANCE_NAME: Sonarr_TV
