@@ -1,0 +1,6 @@
+{
+  "yaml.schemas": {
+    "Kubernetes": "cluster/*.yaml",
+    "https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json": "file:///home/stephen/new_template_k3s/cluster/apps/media/recyclarr/recyclarr.yaml"
+  }
+}
