@@ -33,9 +33,6 @@ spec:
           http:
             port: 1080
     persistence:
-      config:
-        enabled: true
-        existingClaim: recyclarr-config-v1
       recyclarr:
         enable: true
         type: configMap
