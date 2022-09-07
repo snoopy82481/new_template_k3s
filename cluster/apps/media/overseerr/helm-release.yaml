@@ -2,39 +2,38 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: overseerr
-  namespace: media
+  name: &app overseerr
+  namespace: default
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: overseerr
-      version: 5.4.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     remediation:
-      retries: 3
+      retries: 5
   values:
     image:
       repository: ghcr.io/sct/overseerr
-      tag: 1.29.1
+      tag: 1.29.1@sha256:14a39ee03d70849aeaa0cc2ead8805b8510d849f69f9349101695d6e16097ba4
     env:
       TZ: ${TZ}
       LOG_LEVEL: "info"
+      PORT: &port 5055
     service:
       main:
         ports:
           http:
-            port: 5055
+            port: *port
     ingress:
       main:
         enabled: true
@@ -43,8 +42,6 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
           external-dns/is-public: "true"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "eye-circle"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
         hosts:
@@ -56,11 +53,6 @@ spec:
           - secretName: "{{ .Release.Name }}-tls"
             hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
         enabled: true
@@ -68,7 +60,7 @@ spec:
         mountPath: /app/config
     resources:
       requests:
+        cpu: 10m
         memory: 250Mi
-        cpu: 500m
       limits:
-        memory: 750Mi
+        memory: 500Mi

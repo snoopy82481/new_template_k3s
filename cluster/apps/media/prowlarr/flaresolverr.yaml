@@ -2,31 +2,29 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: flaresolverr
+  name: &app flaresolverr
   namespace: media
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: flaresolverr
-      version: 5.4.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     remediation:
-      retries: 3
+      retries: 5
   values:
     image:
       repository: ghcr.io/flaresolverr/flaresolverr
-      tag: v2.2.6
+      tag: v2.2.6@sha256:b9a3857fc2dd9fd4fcd0ab4dead34c86e9ef14caca8611badb42e07c64dd20e9
       pullPolicy: IfNotPresent
     env:
       TZ: ${TZ}
@@ -37,7 +35,7 @@ spec:
         mountPath: /config
     resources:
       requests:
-        memory: 250Mi
-        cpu: 500m
+        cpu: 10m
+        memory: 100Mi
       limits:
-        memory: 750Mi
+        memory: 500Mi

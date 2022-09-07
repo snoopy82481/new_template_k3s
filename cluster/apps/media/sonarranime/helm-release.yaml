@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: sonarranime
+  name: &app sonarranime
   namespace: media
 spec:
   interval: 15m
@@ -42,8 +42,6 @@ spec:
         ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "television-box"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
@@ -68,19 +66,15 @@ spec:
         existingClaim: sonarranime-config-v1
       media:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "truenas.${SECRET_DOMAIN}"
-            path: /mnt/storage0/Data
+        type: nfs
+        server: "truenas.${SECRET_DOMAIN}"
+        path: /mnt/storage0/Data
         mountPath: /media
       backup:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "truenas.${SECRET_DOMAIN}"
-            path: /mnt/storage0/backup
+        type: nfs
+        server: "truenas.${SECRET_DOMAIN}"
+        path: /mnt/storage0/backup
         mountPath: /backup
     resources:
       requests:

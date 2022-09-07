@@ -20,9 +20,9 @@ spec:
       containers:
         - name: rook-direct-mount
           image: rook/ceph:v1.10.0
+          imagePullPolicy: IfNotPresent
           command: ["/bin/bash"]
           args: ["-m", "-c", "/usr/local/bin/toolbox.sh"]
-          imagePullPolicy: IfNotPresent
           tty: true
           env:
             - name: ROOK_CEPH_USERNAME
@@ -36,8 +36,8 @@ spec:
                   name: rook-ceph-mon
                   key: ceph-secret
           securityContext:
-            runAsUser: 0
             privileged: true
+            runAsUser: 0
           volumeMounts:
             - mountPath: /dev
               name: dev
@@ -47,8 +47,6 @@ spec:
               name: libmodules
             - name: mon-endpoint-volume
               mountPath: /etc/rook
-            - name: nas-data
-              mountPath: /mnt/nas-data
       hostNetwork: true
       volumes:
         - name: dev
@@ -60,10 +58,6 @@ spec:
         - name: libmodules
           hostPath:
             path: /lib/modules
-        - name: nas-data
-          nfs:
-            server: "truenas.${SECRET_DOMAIN}"
-            path: /mnt/storage0/Data
         - name: mon-endpoint-volume
           configMap:
             name: rook-ceph-mon-endpoints

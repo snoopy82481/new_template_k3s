@@ -2,50 +2,45 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: &app prowlarr
   namespace: media
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: prowlarr
-      version: 4.5.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     remediation:
-      retries: 3
+      retries: 5
   values:
     image:
-      repository: cr.hotio.dev/hotio/prowlarr
-      tag: nightly
-      pullPolicy: Always
+      repository: ghcr.io/onedr0p/prowlarr-nightly
+      tag: 0.4.5.1958@sha256:83e2658f75028d67bc90ec98bb11bf129c2822f0836635d50256b72a4b346249
     env:
       TZ: ${TZ}
-      PUID: 1001
-      GUID: 1001
-      UMASK: 002
+      PROWLARR__INSTANCE_NAME: Prowlarr
+      PROWLARR__PORT: &port 9696
+      PROWLARR__LOG_LEVEL: info
     service:
       main:
         ports:
           http:
-            port: 9696
+            port: *port
     ingress:
       main:
         enabled: true
         ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "eye-circle"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
@@ -57,22 +52,18 @@ spec:
           - secretName: "{{ .Release.Name }}-tls"
             hosts:
               - *host
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
         existingClaim: prowlarr-config-v1
-        mountPath: /config
-      backup:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "truenas.${SECRET_DOMAIN}"
-            path: /mnt/storage0/backup
-        mountPath: /backup
     resources:
       requests:
-        memory: 250Mi
-        cpu: 500m
+        cpu: 10m
+        memory: 100Mi
       limits:
-        memory: 750Mi
+        memory: 500Mi
