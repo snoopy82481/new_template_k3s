@@ -28,6 +28,11 @@ spec:
       pullPolicy: IfNotPresent
     env:
       TZ: ${TZ}
+    service:
+      main:
+        ports:
+          http:
+            port: 8191
     persistence:
       config:
         enabled: true
