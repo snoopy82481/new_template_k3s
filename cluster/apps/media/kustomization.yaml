@@ -12,4 +12,5 @@ resources:
   - tautulli
   - qbittorrent
   - recyclarr
+  - recyclarr_edge
   - bazarr
