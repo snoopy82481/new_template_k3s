@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: ghcr.io/linuxserver/heimdall
-      tag: v2.4.13-ls186@sha256:991cfc3a74ed4fedc3ac39ed7eb39a2d13303102464e6a1091776c685066f955
+      tag: v2.4.13-ls186@sha256:550e844865454bf9dac45baa0fa21433b9349a69d3ee5bb0d26c2ae6f171f023
     env:
       TZ: ${TZ}
     service:
