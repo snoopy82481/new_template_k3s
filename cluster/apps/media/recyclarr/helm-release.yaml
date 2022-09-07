@@ -46,7 +46,7 @@ spec:
           - name: shared
             mountPath: /shared
     persistence:
-      recyclarr:
+      config:
         enable: true
         type: configMap
         name: *app
