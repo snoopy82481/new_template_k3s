@@ -63,7 +63,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: sonarr-config-v1
+        existingClaim: radarr-config-v1
       media:
         enabled: true
         type: nfs
