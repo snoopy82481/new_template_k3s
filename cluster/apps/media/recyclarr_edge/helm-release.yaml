@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app recyclarr_edge
+  name: &app recyclarr-edge
   namespace: media
 spec:
   interval: 15m
