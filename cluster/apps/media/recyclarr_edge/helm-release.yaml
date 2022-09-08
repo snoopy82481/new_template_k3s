@@ -21,6 +21,9 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  dependsOn:
+    - name: recyclarr
+      namespace: media
   values:
     image:
       repository: ghcr.io/recyclarr/recyclarr
@@ -35,6 +38,9 @@ spec:
     initContainers:
       init-configs:
         image: busybox:latest@sha256:20142e89dab967c01765b0aea3be4cec3a5957cc330f061e5503ef6168ae6613
+        envFrom:
+          - secretRef:
+              name: *app
         command:
           - "/bin/bash"
           - -c
@@ -49,7 +55,7 @@ spec:
       recyclarr:
         enable: true
         type: configMap
-        name: *app
+        name: recyclarr
         subpath: recyclarr.yaml
         mountPath: /config/recyclarr.yaml
         readonly: true
