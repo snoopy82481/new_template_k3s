@@ -26,3 +26,4 @@ resources:
   - traefik-charts.yaml
   - weaveworks-kured-charts.yaml
   - k8s-gateway-charts.yaml
+  - bjw-s-charts.yaml
