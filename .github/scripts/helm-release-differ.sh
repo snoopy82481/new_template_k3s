@@ -6,6 +6,7 @@ source "$(dirname "${0}")/lib/functions.sh"
 set -o errexit
 set -o nounset
 set -o pipefail
+set -x
 shopt -s lastpipe
 
 show_help() {
