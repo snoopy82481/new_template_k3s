@@ -27,7 +27,7 @@ spec:
       tag: version-v2.4.13
       pullPolicy: IfNotPresent
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
     service:
       main:
         ports:

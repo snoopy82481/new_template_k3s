@@ -29,7 +29,7 @@ spec:
       tag: v2.2.6
       pullPolicy: IfNotPresent
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
     persistence:
       config:
         enabled: true

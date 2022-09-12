@@ -26,7 +26,7 @@ spec:
       repository: ghcr.io/onedr0p/bazarr
       tag: 1.1.1@sha256:8a71a5ddd1ba91347eda2b1eda26325a9208ebd5d9452492856ec32c97feee64
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
     service:
       main:
         ports:

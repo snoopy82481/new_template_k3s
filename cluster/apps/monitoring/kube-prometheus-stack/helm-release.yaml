@@ -1,0 +1,171 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 39.11.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    alertmanager:
+      enabled: true
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        hosts:
+          - &host "alert-manager.${SECRET_DOMAIN}"
+        tls:
+          - secretName: "alert-manager-tls"
+            hosts:
+              - *host
+      alertmanagerSpec:
+        replicas: 3
+        podAntiAffinity: hard
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "ceph-block"
+              resources:
+                requests:
+                  storage: 1Gi
+
+    kube-state-metrics:
+      metricLabelsAllowlist:
+        - "persistentvolumeclaims=[*]"
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
+
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+
+    kubeApiServer:
+      enabled: true
+
+    kubeControllerManager:
+      enabled: true
+      endpoints:
+        - 192.168.20.5
+        - 192.168.20.6
+        - 192.168.20.7
+
+    kubeScheduler:
+      enabled: true
+      endpoints:
+        - 192.168.20.5
+        - 192.168.20.6
+        - 192.168.20.7
+
+    kubeProxy:
+      enabled: true
+      endpoints:
+        - 192.168.20.5
+        - 192.168.20.6
+        - 192.168.20.7
+
+    kubeEtcd:
+      enabled: true
+      endpoints:
+        - 192.168.20.5
+        - 192.168.20.6
+        - 192.168.20.7
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
+
+    prometheus:
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        hosts:
+          - &host "prometheus.${SECRET_DOMAIN}"
+        tls:
+          - hosts:
+              - *host
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      thanosIngress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        annotations:
+          nginx.ingress.kubernetes.io/ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+        hosts:
+          - &host "thanos-sidecar.${SECRET_DOMAIN}"
+        tls:
+          - secretName: "thanos-sidecar-tls"
+            hosts:
+              - *host
+      prometheusSpec:
+        replicas: 3
+        replicaExternalLabelName: __replica__
+        externalLabels:
+          cluster: home-ops
+        thanos:
+          image: quay.io/thanos/thanos:v0.28.0
+          version: "v0.28.0"
+        podAntiAffinity: hard
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        retention: 14d
+        retentionSize: 45GB
+        enableAdminAPI: true
+        walCompression: true
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "ceph-block"
+              resources:
+                requests:
+                  storage: 50Gi
+        resources:
+          requests:
+            cpu: 10m
+            memory: 2000Mi
+          limits:
+            memory: 8000Mi

@@ -9,4 +9,4 @@ resources:
   - media
   - rook-ceph
   - vpn
-  - monitoring
+  - tigera-operator

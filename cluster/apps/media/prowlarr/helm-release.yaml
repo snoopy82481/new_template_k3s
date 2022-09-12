@@ -27,7 +27,7 @@ spec:
       tag: nightly
       pullPolicy: Always
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
       PUID: 1001
       GUID: 1001
       UMASK: 002
@@ -61,7 +61,7 @@ spec:
           tag: v2.2.6
           pullPolicy: IfNotPresent
         env:
-          TZ: ${TZ}
+          TZ: ${TIMEZONE}
     persistence:
       config:
         enabled: true
