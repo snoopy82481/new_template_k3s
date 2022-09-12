@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: &app prowlarr
   namespace: media
 spec:
   interval: 15m
@@ -23,24 +23,24 @@ spec:
       retries: 5
   values:
     image:
-      repository: cr.hotio.dev/hotio/prowlarr
-      tag: nightly
-      pullPolicy: Always
+      repository: ghcr.io/onedr0p/prowlarr-nightly
+      tag: 0.4.6.1965@sha256:3b39881d6bb0a5378c953812007d90a29a135005726c49a63e9d7a95c910881b
     env:
       TZ: ${TIMEZONE}
-      PUID: 1001
-      GUID: 1001
-      UMASK: 002
+      PROWLARR__INSTANCE_NAME: Prowlarr
+      PROWLARR__PORT: &port 9696
+      PROWLARR__LOG_LEVEL: info
     service:
       main:
         ports:
           http:
-            port: 9696
+            port: *port
     ingress:
       main:
         enabled: true
         ingressClassName: "nginx"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-staging"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
             sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_PUBLIC_DOMAIN}/css/base/prowlarr/nord.css"></head>';
@@ -54,14 +54,11 @@ spec:
           - secretName: "{{ .Release.Name }}-tls"
             hosts:
               - *host
-    additionalContainers:
-      flaresolver:
-        image:
-          repository: ghcr.io/flaresolverr/flaresolverr
-          tag: v2.2.6
-          pullPolicy: IfNotPresent
-        env:
-          TZ: ${TIMEZONE}
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
@@ -75,7 +72,7 @@ spec:
         mountPath: /backup
     resources:
       requests:
-        cpu: 10m
         memory: 250Mi
+        cpu: 500m
       limits:
-        memory: 2000Mi
+        memory: 500Mi

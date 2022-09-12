@@ -23,9 +23,8 @@ spec:
       retries: 5
   values:
     image:
-      repository: lscr.io/linuxserver/heimdall
-      tag: version-v2.4.13
-      pullPolicy: IfNotPresent
+      repository: ghcr.io/linuxserver/heimdall
+      tag: v2.4.13-ls186@sha256:550e844865454bf9dac45baa0fa21433b9349a69d3ee5bb0d26c2ae6f171f023
     env:
       TZ: ${TIMEZONE}
     service:

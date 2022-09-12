@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: ghcr.io/sct/overseerr
-      tag: 1.29.1
+      tag: 1.29.1@sha256:83d7e572638f8cd5364d5e3214633123a9d836f3074bcf266f8c45b13986980e
     env:
       TZ: ${TIMEZONE}
       LOG_LEVEL: "info"
@@ -55,11 +55,6 @@ spec:
           - secretName: "{{ .Release.Name }}-tls"
             hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
         enabled: true
@@ -70,4 +65,4 @@ spec:
         cpu: 10m
         memory: 250Mi
       limits:
-        memory: 2000Mi
+        memory: 500Mi
