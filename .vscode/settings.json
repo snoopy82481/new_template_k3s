@@ -1,6 +1,35 @@
 {
+  "ansible.ansibleLint.arguments": "-c .github/linters/.ansible-lint",
+  "files.associations": {
+    "*.json5": "jsonc",
+    "**/ansible/**/*.yml": "ansible",
+    "**/ansible/**/*.sops.yml": "yaml",
+    "**/ansible/**/inventory/**/*.yml": "yaml",
+    "**/terraform/**/*.tf": "terraform",
+    "**/cluster/**/*.sops.toml": "plaintext"
+  },
+  "prettier.configPath": ".github/linters/.prettierrc.yaml",
+  "prettier.ignorePath": ".github/linters/.prettierignore",
+  "explorer.autoReveal": false,
   "yaml.schemas": {
     "Kubernetes": "cluster/*.yaml",
-    "https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json": "file:///home/stephen/new_template_k3s/cluster/apps/media/recyclarr/recyclarr.yaml"
+    "recyclarr": "https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json"
+  },
+  "material-icon-theme.folders.associations": {
+    ".taskfiles": "utils",
+    "bootstrap": "import",
+    "charts": "kubernetes",
+    "kube-system": "kubernetes",
+    "networking": "connection",
+    "monitoring": "event",
+    "crds": "ci",
+    "flux": "generator",
+    "flux-system": "generator",
+    "radarr": "video",
+    "radarr4k": "video",
+    "sonarr": "video",
+    "sonarranime": "video",
+    "sonarranime-widowmaker": "video",
+    "tautulli": "event"
   }
 }

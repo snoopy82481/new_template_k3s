@@ -2,7 +2,6 @@
 ignore: |
   *.sops.*
   gotk-components.yaml
-  recyclarr.yaml
 extends: default
 rules:
   truthy:

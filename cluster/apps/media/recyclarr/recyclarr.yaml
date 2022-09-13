@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
-# yamllint disable
 sonarr:
   - base_url: http://10.43.67.137:8989
     api_key: ${SONARR_APIKEY}
