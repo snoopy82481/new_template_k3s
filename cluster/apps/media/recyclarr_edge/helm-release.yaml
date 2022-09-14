@@ -37,7 +37,7 @@ spec:
             port: 1080
     initContainers:
       init-configs:
-        image: busybox:latest@sha256:20142e89dab967c01765b0aea3be4cec3a5957cc330f061e5503ef6168ae6613
+        image: busybox:latest@sha256:135c42550cbea37749b2040355ea1d58245334920ce88706ac6d2adb2d84d3fd
         envFrom:
           - secretRef:
               name: *app
