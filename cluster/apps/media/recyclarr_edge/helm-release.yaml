@@ -27,9 +27,9 @@ spec:
   values:
     image:
       repository: ghcr.io/recyclarr/recyclarr
-      tag: edge@sha256:136de390d4bc7a854db603d84bfd3aefeca2a8ed59b8be558334d606883a5e7c
+      tag: edge@sha256:8786bd19cf7d08bab235f58bc11b98446329f6e19afc3df69ecb62f8d8820183
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
     service:
       main:
         ports:

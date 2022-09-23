@@ -11,6 +11,5 @@ resources:
   - sabnzbd
   - prowlarr
   - tautulli
-  - qbittorrent
   - recyclarr
   - bazarr

@@ -1,0 +1,99 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vpn-gateway
+  namespace: vpn
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: pod-gateway
+      version: 5.6.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/pod-gateway
+      tag: v1.7.0@sha256:ce4871ccdfb98e8dcb5330125a06954ca3b40d9cff3235fb39ac2ba33feff0ff
+
+    additionalContainers:
+      gluten:
+        image:
+          repository: qmcgaw/gluetun
+          tag: v3.30.0@sha256:6bbc9ae5975dac7745a2fadee196f3456d2916adb1736f15a11896e599ba2a7d
+
+        env:
+          VPN_TYPE: wireguard
+          UPDATER_PERIOD: 24h
+          VPN_ENDPOINT_PORT: ${VPN_FORWARD_PORT_1}
+
+        envFrom:
+          - secretRef:
+              name: vpnconfig
+
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+
+    addons:
+      netshoot:
+        enabled: true
+
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: downloads-gateway-pod-gateway
+      secret.reloader.stakater.com/reload: downloads-gateway-vpnconfig
+
+    routed_namespaces:
+      - downloads
+
+    DNS: 172.16.0.1
+
+    settings:
+      VPN_INTERFACE: wg0
+      VXLAN_ID: 43
+      VXLAN_IP_NETWORK: 172.16.0
+      VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
+      VPN_BLOCK_OTHER_TRAFFIC: true
+      VPN_TRAFFIC_PORT: "51820"
+      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16 172.16.0.0/12"
+
+    publicPorts:
+      - hostname: qbittorrent
+        IP: 10
+        ports:
+          - type: tcp
+            port: ${VPN_FORWARD_PORT_1}
+          - type: udp
+            port: ${VPN_FORWARD_PORT_1}
+
+    webhook:
+      image:
+        repository: ghcr.io/k8s-at-home/gateway-admision-controller
+        tag: v3.6.0
+        pullPolicy: IfNotPresent
+      replicas: 1
+      strategy:
+        type: RollingUpdate
+      gatewayDefault: false
+      gatewayLabel: setGateway
+      gatewayAnnotation: setGateway
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: vpn-gateway-config-v1
+        mountPath: /gluetun

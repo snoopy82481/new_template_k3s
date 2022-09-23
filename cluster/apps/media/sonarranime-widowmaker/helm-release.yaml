@@ -24,9 +24,9 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/sonarr-widowmaker
-      tag: 4.0.0.2179@sha256:493d550cf436f005b7d36291e3fdb81a303580efe7334a2a797d19f1d42adfb7
+      tag: 4.0.0.2178@sha256:5ebc106ba5e8505bbeadc87f777b56492d9c548d1289cdda3f22e12189a4741b
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
       SONARR__INSTANCE_NAME: Sonarr_Anime_Widowmaker
       SONARR__PORT: &port 8989
       SONARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -41,7 +41,7 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          cert-manager.io/cluster-issuer: "letsencrypt-staging"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:

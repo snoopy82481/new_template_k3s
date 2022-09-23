@@ -2,12 +2,16 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+<<<<<<<< HEAD:cluster/apps/media/sonarranime-widowmaker/config-pvc.yaml
   name: sonarranime-widowmaker-config-v1
+========
+  name: vpn-gateway-config-v1
+>>>>>>>> 24f3f7b (Refactor entire cluster):cluster/apps/vpn/vpn-gateway/config-pvc.yaml
   namespace: media
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 256Mi
   storageClassName: ceph-block

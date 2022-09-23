@@ -4,10 +4,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: bazarr-config-v1
   namespace: media
+  labels:
+    app.kubernetes.io/name: &name bazarr
+    app.kubernetes.io/instance: *name
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 1Gi
   storageClassName: ceph-block
