@@ -24,10 +24,10 @@ spec:
   values:
     image:
       repository: ghcr.io/flaresolverr/flaresolverr
-      tag: v2.2.8@sha256:0452933949a102867709498baa5c167b0c93e6048338ac16e16a4298e7cbf957
+      tag: v2.2.7@sha256:7bb2e28fcf5086a819d2e1e76f2e7e65ca35f0bd5af2828b0861774b7337c7cf
       pullPolicy: IfNotPresent
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
     service:
       main:
         ports:

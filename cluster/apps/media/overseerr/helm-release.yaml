@@ -24,9 +24,9 @@ spec:
   values:
     image:
       repository: ghcr.io/sct/overseerr
-      tag: 1.30.0@sha256:f38b4762a4c75496d31904b9c5d3e0d98cf499ce6ffa5dbf49544af7ff999e72
+      tag: 1.29.1@sha256:83d7e572638f8cd5364d5e3214633123a9d836f3074bcf266f8c45b13986980e
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
       LOG_LEVEL: "info"
       PORT: &port 5055
     service:
@@ -37,13 +37,15 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          cert-manager.io/cluster-issuer: ${CLUSTER_CERT}
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
           external-dns/is-public: "true"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/overseerr/nord.css"></head>';
+            sub_filter_once on;
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

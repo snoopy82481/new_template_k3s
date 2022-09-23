@@ -8,3 +8,5 @@ resources:
   - system-upgrade
   - media
   - rook-ceph
+  - vpn
+  - tigera-operator
