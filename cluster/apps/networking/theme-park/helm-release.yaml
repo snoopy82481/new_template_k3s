@@ -26,8 +26,12 @@ spec:
       replicas: 3
       strategy: RollingUpdate
     image:
-      repository: ghcr.io/onedr0p/theme-park
-      tag: 1.10.1@sha256:4881cddf347ffb4e288254afd086522feb49853ba55f2f4820c4858fcb65492f
+      repository: ghcr.io/tarampampam/error-pages
+      tag: 2.18.0@sha256:df81d8d71a838ef73e18996b62259d52be57b22f66c0fcf67c1fb0709f8297e0
+    env:
+      TZ: ${TZ}
+      TEMPLATE_NAME: l7-dark
+      SHOW_DETAILS: "false"
     service:
       main:
         ports:
