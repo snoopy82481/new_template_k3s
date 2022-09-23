@@ -13,7 +13,7 @@ spec:
       version: 5.6.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
   install:
@@ -25,19 +25,21 @@ spec:
       retries: 5
   values:
     image:
-      repository: ghcr.io/k8s-at-home/pod-gateway
-      tag: v1.7.0@sha256:ce4871ccdfb98e8dcb5330125a06954ca3b40d9cff3235fb39ac2ba33feff0ff
+      repository: ghcr.io/angelnu/pod-gateway
+      tag: v1.8.0@sha256:91a51d0cfcec00834ba3878e07fca2d7c3ce72ac259e2a2787600d0222dbdd9b
 
     additionalContainers:
       gluten:
         image:
           repository: qmcgaw/gluetun
-          tag: v3.30.0@sha256:6bbc9ae5975dac7745a2fadee196f3456d2916adb1736f15a11896e599ba2a7d
+          tag: v3.31.1@sha256:dabf4efdadafd6acce67bf89b11396e5c87dd1e25705b36fc9211730c943db47
 
         env:
           VPN_TYPE: wireguard
+          VPN_INTERFACE: wg0
           UPDATER_PERIOD: 24h
-          VPN_ENDPOINT_PORT: ${VPN_FORWARD_PORT_1}
+          FIREWALL: off
+          DOT: off
 
         envFrom:
           - secretRef:
@@ -53,8 +55,8 @@ spec:
         enabled: true
 
     podAnnotations:
-      configmap.reloader.stakater.com/reload: downloads-gateway-pod-gateway
-      secret.reloader.stakater.com/reload: downloads-gateway-vpnconfig
+      configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
+      secret.reloader.stakater.com/reload: vpnconfig
 
     routed_namespaces:
       - downloads
@@ -81,19 +83,9 @@ spec:
             port: ${VPN_FORWARD_PORT_1}
 
     webhook:
+      gatewayAnnotation: setGateway
+      gatewayDefault: false
+      gatewayLabel: setGateway
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
         tag: v3.6.0
-        pullPolicy: IfNotPresent
-      replicas: 1
-      strategy:
-        type: RollingUpdate
-      gatewayDefault: false
-      gatewayLabel: setGateway
-      gatewayAnnotation: setGateway
-
-    persistence:
-      config:
-        enabled: true
-        existingClaim: vpn-gateway-config-v1
-        mountPath: /gluetun
