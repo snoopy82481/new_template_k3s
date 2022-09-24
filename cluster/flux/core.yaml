@@ -10,7 +10,7 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: flux-cluster
+    name: home-cluster
   dependsOn:
     - name: repositories
     - name: config

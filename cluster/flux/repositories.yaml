@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-cluster
+    name: home-cluster
   dependsOn:
     - name: config
