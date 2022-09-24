@@ -28,3 +28,5 @@ spec:
     cleanupOnFail: true
   values:
     fullnameOverride: metallb
+    crds:
+      enabled: true
