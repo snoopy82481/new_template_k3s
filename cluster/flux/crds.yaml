@@ -11,3 +11,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-cluster
+  dependsOn:
+    - name: repositories

@@ -1,0 +1,16 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: flux-cluster
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/snoopy82481/new_template_k3s.git
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include gitops dirs
+    !/cluster
