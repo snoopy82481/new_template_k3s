@@ -6,3 +6,4 @@ resources:
   - rook-ceph
   - system-upgrade-controller
   - calico
+  - metellb
