@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  path: /deploy/examples/crds.yaml
+  path: ./config/examples/crds.yaml
   prune: false
   wait: true
   sourceRef:
