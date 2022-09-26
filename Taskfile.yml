@@ -50,6 +50,7 @@ tasks:
         terraform
         yamllint
         yq
+        cilium-cli
 
   verify:
     desc: Verify env settings
